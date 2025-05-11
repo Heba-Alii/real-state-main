@@ -1,0 +1,12 @@
+# Exported from Render on 2024-07-24T21:27:44Z
+services:
+- type: web
+  name: real-state
+  runtime: node
+  repo: https://github.com/arrealstate/real-state
+  plan: standard
+  region: oregon
+  buildCommand: npm run clean && npm install && npm run build && ls -R
+  startCommand: node api/index.js
+  autoDeploy: false
+version: "1"
