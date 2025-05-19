@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header.jsx";
 
+
 import Home from "./pages/home/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/sign/SignUp";
@@ -114,3 +115,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
+

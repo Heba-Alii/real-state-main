@@ -1,15 +1,19 @@
 import React from 'react';
 import { FaYoutube, FaLinkedin, FaInstagram, FaFacebook, FaWhatsapp, FaPinterest, FaSnapchat, FaTiktok, FaTelegram, FaTwitter } from 'react-icons/fa'; // Corrected import statement
 import { FaXTwitter } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
+
+
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
   return (
     <footer className=" text-white py-8 bg-black">
       <div className="container mx-auto flex flex-wrap justify-center">
         <div className="w-full md:w-1/3 px-4 mb-6 bg-slate-1000 text-center">
-          <h2 className="text-2xl ARcolors-2000 font-bold mb-4 text-center">AR Real Estate</h2>
+          <h2 className="text-2xl ARcolors-2000 font-bold mb-4 text-center">{t("AR_REALSTATE")}</h2>
           <p>
-            Explore AR Real Estate, your gateway to exquisite properties. From luxurious villas to elegant apartments, we offer a tailored real estate experience to help you find your dream home.
+            {t("Explore_AR_Real_Estate,your_gateway_to_exquisite_properties.From_luxurious_villas_to_elegant_apartments,we_offer_a_tailored_real_estate_experience_to_help_you_find_your_dream_home.")}
           </p>
 
         </div>

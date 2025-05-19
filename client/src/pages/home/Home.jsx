@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import Footer from "../Footer.jsx";
 import HomeButtons from "./HomeButtons";
 import Notification from "./Notification";
+import { useTranslation } from "react-i18next";
+import "../../i18n";
+
 
 const Home = () => {
   const [isSlowConnection, setIsSlowConnection] = useState(false);
+  const { t, i18n } = useTranslation();
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
@@ -57,8 +61,8 @@ const Home = () => {
       if (connection) {
         setIsSlowConnection(
           connection.saveData ||
-            connection.effectiveType.includes("2g") ||
-            connection.effectiveType.includes("slow-2g")
+          connection.effectiveType.includes("2g") ||
+          connection.effectiveType.includes("slow-2g")
         );
       }
     };
@@ -84,46 +88,44 @@ const Home = () => {
             alt="Background"
           />
         ) : (
-          
-        
+
+
           <div className="absolute top-0 left-0 w-full h-full">
-  <video
-    className="absolute top-0 left-0 w-full h-full object-cover"
-    autoPlay
-    muted
-    loop
-    playsInline
-    poster={backgroundImageUrl}
-    onPlay={() => setIsVideoPlaying(true)}
-  >
-    <source src={videoUrlMp4} type="video/mp4" />
-    <source src={videoUrlWebm} type="video/webm" />
-    Your browser does not support the video tag.
-  </video>
+            <video
+              className="absolute top-0 left-0 w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={backgroundImageUrl}
+              onPlay={() => setIsVideoPlaying(true)}
+            >
+              <source src={videoUrlMp4} type="video/mp4" />
+              <source src={videoUrlWebm} type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
 
 
-  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-0"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-0"></div>
 
-  <div className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center ">
-    <div className="w-full text-center lg:text-white">
-      <img
-        src="https://res.cloudinary.com/dusfhr8a4/image/upload/f_auto,q_auto/um3c2nygafj21nxg381s"
-        alt="AR RealEstate Logo"
-        className="mx-auto mb-4 lg:w-1/4"
-      />
-      <h1 className="text-4xl lg:text-6xl font-bold ARcolors-1000">
-        Find Your Next <span className="ARcolors-6000">Perfect</span>{" "}
-        Place with Us
-      </h1>
-      <p className="ARcolors-1000 text-lg m-6 lg:text-xl mt-4">
-        A.R Estate is the best place to find your next perfect place
-        to live. We have a wide range of properties for you to choose
-        from.
-      </p>
-      <HomeButtons loading="lazy" />
-    </div>
-  </div>
-</div>
+            <div className="absolute top-0 left-0 w-full h-full z-10 flex items-center justify-center ">
+              <div className="w-full text-center lg:text-white">
+                <img
+                  src="https://res.cloudinary.com/dusfhr8a4/image/upload/f_auto,q_auto/um3c2nygafj21nxg381s"
+                  alt="AR RealEstate Logo"
+                  className="mx-auto mb-4 lg:w-1/4"
+                />
+                <h1 className="text-4xl lg:text-6xl font-bold ARcolors-1000">
+                  {t("find_your_next")} <span className="ARcolors-6000">{t("perfect")}</span>{" "}
+                  {t("Place with Us")}
+                </h1>
+                <p className="ARcolors-1000 text-xl m-6 lg:text-xl mt-4">
+                  {t("A.R_estate_is_the_best_place_to_find_your_next_perfect_place_to_live_we_have_a_wide_range_of_properties_for_you_to_choose_from")}
+                </p>
+                <HomeButtons loading="lazy" />
+              </div>
+            </div>
+          </div>
 
         )}
       </div>
