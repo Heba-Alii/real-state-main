@@ -1,8 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import { useTranslation } from "react-i18next";
+
 export default function POPUP({ isOpen, toggleDropdown }) {
   const [developers, setDevelopers] = useState([]);
   const popupRef = useRef(null);
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+
+  const arabicNamesMap = {
+    "Bin Ghatti ⭐": " بن غاطي⭐ ",
+    "Ellington Properties": "إلينغتون العقارية",
+    "Sobha Realty ⭐": " شوبا⭐ ",
+    "AZIZI": " عزيزي",
+    "DANUBE Properties": "دانوب العقارية",
+    "Meraas ⭐": "  ميراس⭐ ",
+    "LEOS": "ليوس",
+    "Reportage Prime Properties": "ريبورتاج برايم العقارية",
+    "EBDAA": "إبداع"
+  };
+
 
   const closeDropdown = () => {
     toggleDropdown();
@@ -53,7 +70,8 @@ export default function POPUP({ isOpen, toggleDropdown }) {
   return (
     <div className="relative">
       {isOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
+
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 " dir={isArabic ? "rtl" : "ltr"}>
           <div className="w-full max-w-screen-2xl bg-black border border-white-100 rounded-md shadow-lg p-6 relative  lg:mx-4 xl:mx-4" ref={popupRef} style={{ maxHeight: '90vh', overflowY: 'auto' }}>
             <button
               onClick={closeDropdown}
@@ -63,7 +81,7 @@ export default function POPUP({ isOpen, toggleDropdown }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <h2 className="text-2xl font-bold mb-4 text-white font-bold">Developers</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white font-bold">{t("developers")}</h2>
             <div className="flex-1">
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {developers.map((developer) => (
@@ -76,7 +94,16 @@ export default function POPUP({ isOpen, toggleDropdown }) {
                           className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-gray-600"
                         />
                         <div>
-                          <h3 className="text-lg font-bold">{developer.username}</h3>
+
+                          <h3
+                            className={`font-bold ${isArabic ? "text-2xl pr-4" : "text-xl"}`}
+                          >
+                            {isArabic
+                              ? arabicNamesMap[developer.username.trim()] || developer.username
+                              : developer.username}
+                          </h3>
+
+
                         </div>
                       </li>
                     </Link>

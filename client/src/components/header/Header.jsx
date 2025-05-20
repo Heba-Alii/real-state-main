@@ -10,6 +10,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 export default function Header() {
   const [language, setLanguage] = useState("EN");
   const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [showLangMenu, setShowLangMenu] = useState(false);
 
   const handleLanguageChange = (lang) => {
@@ -48,11 +49,16 @@ export default function Header() {
     <header className="bg-black shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         {/* Logo and Offer Button */}
-        <div className="flex items-center space-x-4 ">
+        <div className="flex items-center space-x-4" dir={isArabic ? 'rtl' : 'ltr'}>
           <Link to="/">
-            <h1 className="font-bold text-sm sm:text-xl flex flex-wrap text-white">
-              <span className="ARcolors-1000">{t("AR_REALSTATE")}</span>
-            </h1>
+            <h1 className="font-bold text-sm sm:text-xl text-white flex items-center">
+              <span
+                className={`ARcolors-1000 ${isArabic ? 'ml-4' : 'mr-4'
+                  }`}
+              >
+                {t("AR_REALSTATE")}
+              </span>          
+                </h1>
           </Link>
           <ArOffersButton />
         </div>

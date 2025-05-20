@@ -7,29 +7,45 @@ import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   return (
-    <footer className=" text-white py-8 bg-black">
-      <div className="container mx-auto flex flex-wrap justify-center">
-        <div className="w-full md:w-1/3 px-4 mb-6 bg-slate-1000 text-center">
-          <h2 className="text-2xl ARcolors-2000 font-bold mb-4 text-center">{t("AR_REALSTATE")}</h2>
+    <footer className="text-white py-8 bg-black" dir={isArabic ? 'rtl' : 'ltr'}>
+      <div className="container mx-auto flex flex-wrap justify-between">
+        {/* AR Real Estate Section */}
+        <div
+          className={`w-full md:w-1/3 px-4 mb-6 ${isArabic ? 'text-center order-1' : 'text-center order-1'
+            }`}
+        >
+          <h2 className="text-2xl ARcolors-2000 font-bold mb-4">
+            {t("AR_REALSTATE")}
+          </h2>
           <p>
             {t("Explore_AR_Real_Estate,your_gateway_to_exquisite_properties.From_luxurious_villas_to_elegant_apartments,we_offer_a_tailored_real_estate_experience_to_help_you_find_your_dream_home.")}
           </p>
-
         </div>
-        <div className="w-full md:w-1/3 px-4 mb-6 ARcolors-1000 text-center">
-          <h2 className="text-2xl font-bold mb-4 ARcolors-2000 text-center">Location</h2>
+
+        {/* Location Section */}
+        <div
+          className={`w-full md:w-1/3 px-4 mb-6 ${isArabic ? 'text-center order-2' : 'text-center order-2'
+            }`}
+        >
+          <h2 className="text-2xl font-bold mb-4 ARcolors-2000">{t("location")}</h2>
           <ul>
-            <li>Country: United Arab Emirates </li>
-            <li> City: Dubai </li>
-            <li>Current Location: Dubai, Business Bay </li>
+            <li>{t("country_united_arab_emirates")}</li>
+            <li>{t("City_Dubai")}</li>
+            <li>{t("current_location_dubai_business_bay")}</li>
           </ul>
         </div>
-        <div className="w-full md:w-1/3 px-4 mb-6 ARcolors-1000 text-center">
-          <h2 className="text-2xl font-bold mb-4 ARcolors-2000 text-center">Contacts</h2>
-          <ul >
-            <li>Phone:+971562929527 </li>
-            <li>Company: HYZ Investment L.L.C</li>
+
+        {/* Contacts Section */}
+        <div
+          className={`w-full md:w-1/3 px-4 mb-6 ${isArabic ? 'text-center order-3' : 'text-center order-3'
+            }`}
+        >
+          <h2 className="text-2xl font-bold mb-4 ARcolors-2000">{t("contacts")}</h2>
+          <ul>
+            <li>{t("phone")}</li>
+            <li>{t("company")}</li>
 
             {/* <div className="flex flex-wrap mt-4 w-full">
   <div className="flex justify-start w-full ">

@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    username_ar: {
+      type: String, // Add this field for the Arabic version of the name
+    },
     email: {
       type: String,
       required: true,
@@ -16,14 +19,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    avatar:{
+    avatar: {
       type: String,
       default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     },
     role: {
       type: String,
       default: "",
-      emum: ["User","developer","microdeveloper", "Admin"]
+      enum: ["User", "developer", "microdeveloper", "Admin"]
     },
     color: {
       type: String,

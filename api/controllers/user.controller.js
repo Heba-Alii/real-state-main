@@ -79,13 +79,13 @@ export const getListingsByUserId = async (req, res, next) => {
 
 export const getUser = async (req, res, next) => {
   try {
-    
+
     const user = await User.findById(req.params.id);
-  
+
     if (!user) return next(errorHandler(404, 'User not found!'));
-  
+
     const { password: pass, ...rest } = user._doc;
-  
+
     res.status(200).json(rest);
   } catch (error) {
     next(error);
@@ -94,7 +94,7 @@ export const getUser = async (req, res, next) => {
 
 export const getUserById = async (req, res, next) => {
   try {
-    const userId = req.params.id; 
+    const userId = req.params.id;
 
     // Find the user by ID in the database
     const user = await User.findById(userId);
@@ -153,7 +153,7 @@ export const getAllUsers = async (req, res, next) => {
 export const getDeveloperUsers = async (req, res, next) => {
   try {
     // Use the User model to find users with the role field set to "developer"
-    const developerUsers = await User.find({ role: 'developer' }, 'username email role createdAt _id avatar');
+    const developerUsers = await User.find({ role: 'developer' }, 'username username_ar email role createdAt _id avatar');
 
     // Send the retrieved users in the response
     res.status(200).json(developerUsers);
@@ -165,11 +165,11 @@ export const getDeveloperUsers = async (req, res, next) => {
 
 export const getDevelopers = async (req, res, next) => {
   try {
-    const query = { role: 'developer' }; 
-    
+    const query = { role: 'developer' };
+
     const developers = await User.find(query)
       .select('username email role createdAt _id avatar')
-      .limit(6) 
+      .limit(6)
       .exec();
 
     res.status(200).json(developers);
@@ -238,7 +238,7 @@ export const getOffersForUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const offers = user.offers; 
+    const offers = user.offers;
 
     res.json(offers);
   } catch (error) {
@@ -251,7 +251,7 @@ export const getUsersWithOffers = async (req, res, next) => {
     const usersWithOffers = await User.find({
       'listings.offers': { $exists: true, $ne: [] }
     })
-    .select('username email role createdAt _id avatar listings');
+      .select('username email role createdAt _id avatar listings');
 
     res.status(200).json(usersWithOffers);
   } catch (error) {
