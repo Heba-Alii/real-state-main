@@ -1,7 +1,11 @@
 import React from 'react';
 import Footer from './Footer';
+import { useTranslation } from "react-i18next";
+
 
 export default function About() {
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   return (
     <section >
       <main
@@ -58,21 +62,21 @@ export default function About() {
             className="mx-auto w-24 h-auto"
           />
         </div>
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-black">About AR RealEstate</h2>
-        <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-12">
-          We specialize in helping clients buy, sell, and rent in the most desirable neighborhoods,
-          offering tailored solutions with expert agents.
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-black">{t("About_AR_RealEstate")}</h2>
+        <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="text-lg text-gray-700 max-w-3xl mx-auto mb-12">
+          {t("about_desc")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
           {/* Card 1 */}
           <div className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all">
             <div className="flex justify-center mb-4">
               <img src="https://img.icons8.com/ios-filled/50/d4af37/home.png" alt="Home Icon" className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-semibold text-black mb-2">Personalized Service</h3>
-            <p className="text-gray-700">
-              We guide you through every step, offering personalized advice tailored to your goals.
+            <h3 className={`font-semibold text-black mb-2 ${isArabic ? 'text-2xl' : 'text-xl'}`}>{t("personalized_service")}</h3>
+            <p className={`text-gray-700 ${isArabic ? 'text-md' : 'text-base'}`}>
+              {t("personalized_service_desc")}
             </p>
           </div>
 
@@ -81,9 +85,9 @@ export default function About() {
             <div className="flex justify-center mb-4">
               <img src="https://img.icons8.com/ios-filled/50/d4af37/search.png" alt="Search Icon" className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-semibold text-black mb-2">Market Experts</h3>
-            <p className="text-gray-700">
-              Our agents have deep knowledge of the real estate market and provide trustworthy insights.
+            <h3 className={`font-semibold text-black mb-2 ${isArabic ? 'text-2xl' : 'text-xl'}`}>{t("market_experts")}</h3>
+            <p className={`text-gray-700 ${isArabic ? 'text-md' : 'text-base'}`}>
+              {t("market_experts_desc")}
             </p>
           </div>
 
@@ -92,9 +96,9 @@ export default function About() {
             <div className="flex justify-center mb-4">
               <img src="https://img.icons8.com/ios-filled/50/d4af37/briefcase.png" alt="Briefcase Icon" className="w-10 h-10" />
             </div>
-            <h3 className="text-xl font-semibold text-black mb-2">Client Dedication</h3>
-            <p className="text-gray-700">
-              We are committed to exceptional service and making the experience exciting and rewarding.
+            <h3 className={`font-semibold text-black mb-2 ${isArabic ? 'text-2xl' : 'text-xl'}`}>{t("client-dedication")}</h3>
+            <p className={`text-gray-700 ${isArabic ? 'text-md' : 'text-base'}`}>
+              {t("client-dedication_desc")}
             </p>
           </div>
         </div>

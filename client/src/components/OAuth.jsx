@@ -4,11 +4,15 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
+import { useTranslation } from "react-i18next";
+
 
 
 export default function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -36,13 +40,13 @@ export default function OAuth() {
   };
   return (
     <button
+      dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
       onClick={handleGoogleClick}
       type='button'
       // className='bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95'
       className='lassName="w-full border border-black py-3 rounded-lg font-semibold hover:bg-yellow-100 flex items-center justify-center gap-3'>
       <FcGoogle className="text-2xl" />
-
-      CONTINUE WITH GOOGLE
+      {t("google")}
     </button>
   );
 }
