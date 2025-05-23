@@ -30,18 +30,20 @@ export default function Contact({ listing }) {
       {landlord && (
         <div className='inline'>
           <div className='flex flex-col gap-2'>
-            <p>
-              Contact <span className='font-semibold'>{landlord.username}</span>{' '}
-              for{' '}
+            <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+            >
+              {t("contact")} <span className='font-semibold'>{landlord.username}</span>{' '}
+              {t("for")}{' '}
               <span className='font-semibold'>{listing.name.toLowerCase()}</span>
             </p>
             <textarea
+              dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
               name='message'
               id='message'
               rows='2'
               value={message}
               onChange={onChange}
-              placeholder='Enter your message here...'
+              placeholder={t("e-mail_message")}
               className='w-full border p-3 rounded-lg'
             ></textarea>
 

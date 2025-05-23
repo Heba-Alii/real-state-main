@@ -64,7 +64,7 @@
   "are_you_sure_delete_listing": "هل أنت متأكد أنك تريد حذف هذا الإعلان؟",
   "yes": "نعم",
   "no": "لا",
-  "offer_code": ": كود العرض",
+  "offer_code": " كود العرض :",
   "property_information": "معلومات العقار",
   "real_state_type": "نوع العقار",
   "price": "السعر:",
@@ -100,5 +100,10 @@
   "contact_mail": "التواصل من خلال البريد الإلكتروني",
   "send_whatsapp_message": "أرسل رسالة واتساب",
   "sending": "جاري الإرسال...",
-  "send_message": "أرسل رسالة نصية"
+  "send_message": "أرسل رسالة نصية",
+  "built-Up_area": "المساحة المبنية",
+  "e-mail_message": "أكتب رسالتك هنا ...",
+  "contact": "للتواصل",
+  "for": "بشأن",
+  "see_details": "إضغط لمزيد من التفاصيل"
 }

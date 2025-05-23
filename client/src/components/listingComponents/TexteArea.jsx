@@ -111,11 +111,12 @@ const TexteArea = ({
         {listing && offerData && offerData.length !== 0 && (
           <div>
             <Link to={linkTo}>
-              <main className="flex justify-center items-center">
+              <main dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+                className="flex justify-center items-center">
                 <p className="bg-black w-full lg:max-w-[400px] sm:max-w-screen-sm text-white text-center p-3 rounded-3xl " >
                   <span className="mr-2">{t("offer_code")}</span>
                   <span className="font-bold mr-4">{offerData.code}</span>
-                  <span className="mr-2 underline font-semibold text-yellow-200">Click To See Details</span>
+                  <span className="mr-2 underline font-semibold text-yellow-200">{t("see_details")}</span>
                   {/* // <span className="font-bold">{newPrice.toLocaleString('en-US')} AED</span> */}
                 </p>
               </main>
@@ -468,9 +469,10 @@ const TexteArea = ({
           )}
 
           {listing.BUA !== 0 && (
-            <p className='text-slate-800'>
-              <span className='font-semibold text-black'>Built-Up Area : </span>
-              {listing.BUA} sqft
+            <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+              className='text-slate-800'>
+              <span className='font-semibold text-black'>{t("built-Up_area")} : </span>
+              {listing.BUA} {t("sqft")}
             </p>
           )}
         </div>
