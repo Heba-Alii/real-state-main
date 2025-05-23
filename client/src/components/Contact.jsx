@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
   const [message, setMessage] = useState('');
+  const [language, setLanguage] = useState("EN");
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const onChange = (e) => {
     setMessage(e.target.value);
   };
@@ -24,30 +29,30 @@ export default function Contact({ listing }) {
     <>
       {landlord && (
         <div className='inline'>
-        <div className='flex flex-col gap-2'>
-          <p>
-            Contact <span className='font-semibold'>{landlord.username}</span>{' '}
-            for{' '}
-            <span className='font-semibold'>{listing.name.toLowerCase()}</span>
-          </p>
-          <textarea
-            name='message'
-            id='message'
-            rows='2'
-            value={message}
-            onChange={onChange}
-            placeholder='Enter your message here...'
-            className='w-full border p-3 rounded-lg'
-          ></textarea>
+          <div className='flex flex-col gap-2'>
+            <p>
+              Contact <span className='font-semibold'>{landlord.username}</span>{' '}
+              for{' '}
+              <span className='font-semibold'>{listing.name.toLowerCase()}</span>
+            </p>
+            <textarea
+              name='message'
+              id='message'
+              rows='2'
+              value={message}
+              onChange={onChange}
+              placeholder='Enter your message here...'
+              className='w-full border p-3 rounded-lg'
+            ></textarea>
 
-          <Link
-          // to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
-          to={`mailto:arrealstate79@gmail.com?subject=Regarding ${listing.name}&body=${message}`}
-          className='bg-yellow-700 text-white text-center p-3 uppercase rounded-3xl font-bold hover:opacity-95'
-          >
-            Send Message          
-          </Link>
-        </div>
+            <Link
+              // to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
+              to={`mailto:arrealstate79@gmail.com?subject=Regarding ${listing.name}&body=${message}`}
+              className='bg-yellow-700 text-white text-center p-3 uppercase rounded-3xl font-bold hover:opacity-95'
+            >
+              {t("send_message")}
+            </Link>
+          </div>
         </div>
 
       )}

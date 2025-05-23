@@ -9,6 +9,15 @@ import {
 import Contact from "../../components/Contact";
 import ListingDescription from "../listingComponents/ListingDescription ";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+function toArabicNumber(number) {
+  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return number.toString().replace(/\d/g, digit => arabicDigits[digit]);
+}
+
+
+
+
 
 const TexteArea = ({
   listing,
@@ -18,7 +27,9 @@ const TexteArea = ({
   offerData,
 }) => {
   const [isSendingMessage, setIsSendingMessage] = useState(false);
-
+  const [language, setLanguage] = useState("EN");
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const linkTo =
     listing.projectName === "Binghatti Phantom"
       ? "/PaymentPlanBINGHATTIPHANTOM"
@@ -41,6 +52,7 @@ const TexteArea = ({
     } = listing;
 
     const formattedType = type === "rent" ? "For Rent" : "For Buy";
+
 
     const message =
       `Hi, I'm interested in the property: ${name} - ${formattedType}.\n` +
@@ -73,8 +85,23 @@ const TexteArea = ({
 
     setIsSendingMessage(false);
   };
+  const typeKey = listing.realEstateType?.trim().toLowerCase();
+
+  const realEstateTyping = {
+    "apartment/flat": "شقة",
+    "villa/townhouse": "فيلا",
+    "land/plot": "أرض / قطعة أرض",
+    "office/ officespace": "مكتب",
+    "retail space/shop/store": "مساحة تجارية / متجر / محل",
+    "warehouse/storage space": "مستودع / مساحة تخزين",
+    "commercial building /commercial property": "مبنى تجاري / عقار تجاري"
+
+  };
+
   // console.log(listing)
   // console.log(offerData.discountPercentage)
+  //console.log('realEstateType:', listing.realEstateType);
+
 
   return (
     <main>
@@ -84,9 +111,9 @@ const TexteArea = ({
         {listing && offerData && offerData.length !== 0 && (
           <div>
             <Link to={linkTo}>
-              <main  className="flex justify-center items-center">
+              <main className="flex justify-center items-center">
                 <p className="bg-black w-full lg:max-w-[400px] sm:max-w-screen-sm text-white text-center p-3 rounded-3xl " >
-                  <span className="mr-2">Offer Code:</span>
+                  <span className="mr-2">{t("offer_code")}</span>
                   <span className="font-bold mr-4">{offerData.code}</span>
                   <span className="mr-2 underline font-semibold text-yellow-200">Click To See Details</span>
                   {/* // <span className="font-bold">{newPrice.toLocaleString('en-US')} AED</span> */}
@@ -110,31 +137,40 @@ const TexteArea = ({
             {listing.propertyAddressInProject}
           </p>
         </div>
-        <div className="flex justify-start gap-4 ">
-          <p className="bg-yellow-700 w-full max-w-[200px] text-white text-lg text-center p-1 rounded-lg font-bold">
+        <div
+          dir={isArabic ? "rtl" : "ltr"}
+          className="flex justify-start gap-4 ">
+          <p className="bg-yellow-700 w-full max-w-[200px] text-white text-lg text-center p-1 rounded-lg font-bold"
+          >
+
             {listing.type === "rent"
-              ? "For Rent"
+              ? t("for_rent")
               : listing.type === "sale"
-                ? "Still Available"
+                ? t("for_sale")
                 : listing.type === "buy"
-                  ? "For Buy"
-                  : "Unknown Type"}
+                  ? t("for_buy")
+                  : t("unknown_type")}
           </p>
         </div>
 
         <h1 className="text-xl font-bold mt-8 mb-2 text-black text-center">
-          Property Information
+          {t("property_information")}
         </h1>
 
         <ListingDescription description={listing.description} />
 
         {listing && listing.type !== "rent" && (
-          <div className="flex gap-2 ">
+          <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+
+            className="flex gap-2 ">
             <p className="text-slate-800">
-              <span className="font-semibold text-black block mt-2 underline">
-                Real Estate Type :{" "}
+              <span
+                className="font-semibold text-black block mt-2 underline">
+                {t("real_state_type")} :{" "}
               </span>
-              {listing.realEstateType}
+              {i18n.language === 'ar'
+                ? realEstateTyping[typeKey] || listing.realEstateType
+                : listing.realEstateType}
             </p>
           </div>
         )}
@@ -162,20 +198,30 @@ const TexteArea = ({
         {listing.priceMin !== 0 ? (
           <>
             {listing && showMinMax ? (
-              <p className="text-slate-800">
-                <span className="font-semibold text-black block mt-2 underline">Price : </span>
-                {`${listing.priceMin.toLocaleString("en-US")} - ${listing.priceMax.toLocaleString("en-US")} AED`}
+              <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+
+                className="text-slate-800 text-2xl">
+                <span className="font-bold text-black block mt-2 underline">{t("price")}</span>
+                {/* {`${listing.priceMin.toLocaleString("en-US")} - ${listing.priceMax.toLocaleString("en-US")} AED`}
+              </p> */}
+                {isArabic
+                  ? `${toArabicNumber(listing.priceMin.toLocaleString("en-US"))} - ${toArabicNumber(listing.priceMax.toLocaleString("en-US"))} درهم`
+                  : `${listing.priceMin.toLocaleString("en-US")} - ${listing.priceMax.toLocaleString("en-US")} AED`}
               </p>
             ) : (
-              <p className="text-slate-800">
-                <span className="font-semibold text-black">Price : </span>
-                {`${listing.priceMin.toLocaleString("en-US")} AED`}
+              <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+                className="text-slate-800 text-2xl">
+                <span className="font-bold text-black underline">{t("price")}</span>{' '}
+                {/* {`${listing.priceMin.toLocaleString("en-US")} AED`} */}
+                {isArabic
+                  ? `${toArabicNumber(listing.priceMin.toLocaleString("en-US"))} درهم`
+                  : `${listing.priceMin.toLocaleString("en-US")} AED`}
               </p>
             )}
           </>
         ) : (
-          <p className="text-slate-800">
-            <span className="font-semibold text-black">Price : </span>
+          <p className="text-slate-800 text-2xl">
+            <span className="font-bold text-black">{t("price")}</span>
             Available On Request
           </p>
         )}
@@ -189,12 +235,12 @@ const TexteArea = ({
             {listing.InvestmentType
               ? listing.InvestmentType.charAt(0).toUpperCase() +
               listing.InvestmentType.slice(1)
-              : "Investment Type"}{" "}
+              : t('investmentType')}{" "}
             :{" "}
           </span>
 
           {/* <span className='font-semibold text-black'> {listing.InvestmentType || 'Investment Type'} - </span> */}
-          {listing.InvestmentTypeDetails || "Investment Type Details"}
+          {listing.InvestmentTypeDetails || t('investmentTypeDetails')}
         </p>
 
         {listing.type === "rent" && (
@@ -206,14 +252,14 @@ const TexteArea = ({
 
         {listing && listing.paymentType === "cash" && (
           <p className="text-slate-800">
-            <span className="font-semibold text-black">Cash Amount : </span>
-            {listing.cashAmount} AED
+            <span className="font-semibold text-black">{t("cashAmount")} : </span>
+            {listing.cashAmount} {t("aed")}
           </p>
         )}
 
         {listing.totalAreaMin !== 0 && (
           <h1 className="text-xl font-bold mt-8 mb-2 text-gray-800 text-center">
-            Property Area
+            {t("property_area")}
           </h1>
         )}
 
@@ -358,41 +404,43 @@ const TexteArea = ({
 
         <div>
           {showMinMax ? (
-            <div className='gap-2 '>
+            <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+
+              className='gap-2 '>
               {listing.internalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>Internal Area : </span>
+                  <span className='font-semibold text-black'>{t("internal_area")} </span>
                   {listing.internalAreaMin}
                   {listing.internalAreaMax !== 0 && (
                     <>
                       <span className='font-semibold text-black'> - </span>
                       {listing.internalAreaMax}
                     </>
-                  )} sqft
+                  )} {t("sqft")}
                 </p>
               )}
               {listing.externalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>External Area : </span>
+                  <span className='font-semibold text-black'>{t("external_area")} </span>
                   {listing.externalAreaMin}
                   {listing.externalAreaMax !== 0 && (
                     <>
                       <span className='font-semibold text-black'> - </span>
                       {listing.externalAreaMax}
                     </>
-                  )} sqft
+                  )} {t("sqft")}
                 </p>
               )}
               {listing.totalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>Total Area: </span>
+                  <span className='font-semibold text-black'>{t("total_area")}</span>
                   {listing.totalAreaMin}
                   {listing.totalAreaMax !== 0 && (
                     <>
                       <span className='font-semibold text-black'> - </span>
                       {listing.totalAreaMax}
                     </>
-                  )} sqft
+                  )} {t("sqft")}
                 </p>
               )}
             </div>
@@ -400,20 +448,20 @@ const TexteArea = ({
             <div className='gap-2 '>
               {listing.internalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>Internal Area : </span>
-                  {listing.internalAreaMin} sqft
+                  <span className='font-semibold text-black'>{t("internal_area")}</span>
+                  {listing.internalAreaMin}{t("sqft")}
                 </p>
               )}
               {listing.externalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>External Area : </span>
-                  {listing.externalAreaMin} sqft
+                  <span className='font-semibold text-black'>{t("external_area")} </span>
+                  {listing.externalAreaMin}{t("sqft")}
                 </p>
               )}
               {listing.totalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>Total Area: </span>
-                  {listing.totalAreaMin} sqft
+                  <span className='font-semibold text-black'>{t("total_area")}</span>
+                  {listing.totalAreaMin}{t("sqft")}
                 </p>
               )}
             </div>
@@ -446,30 +494,38 @@ const TexteArea = ({
           </div>
         )}
 
-      <ul className="text-yellow-700 font-semibold text-sm flex flex-wrap items-center ml-2 gap-4 sm:gap-6 ">
+      <ul dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+        className="text-yellow-700 font-semibold text-sm flex flex-wrap items-center ml-2 gap-4 sm:gap-6 ">
         {listing.bedrooms !== 0 && (
           <li className="flex items-center gap-1 whitespace-nowrap ">
             <FaBed className="text-lg" />
-            {listing.bedrooms > 1
+            {/* {listing.bedrooms > 1
               ? `${listing.bedrooms} beds `
-              : `${listing.bedrooms} bed `}
+              : `${listing.bedrooms} bed `} */}
+            {isArabic
+              ? `${toArabicNumber(listing.bathrooms)} ${listing.bathrooms > 1 ? t("beds") : t("bed")}`
+              : `${listing.bathrooms} ${listing.bathrooms > 1 ? t("beds") : t("bed")}`}
           </li>
         )}
+
         {listing.bathrooms !== 0 && (
           <li className="flex items-center gap-1 whitespace-nowrap ">
             <FaBath className="text-lg" />
-            {listing.bathrooms > 1
+            {/* {listing.bathrooms > 1
               ? `${listing.bathrooms} baths `
-              : `${listing.bathrooms} bath `}
+              : `${listing.bathrooms} bath `} */}
+            {isArabic
+              ? `${toArabicNumber(listing.bathrooms)} ${listing.bathrooms > 1 ? t("baths") : t("bath")}`
+              : `${listing.bathrooms} ${listing.bathrooms > 1 ? t("baths") : t("bath")}`}
           </li>
         )}
         <li className="flex items-center gap-1 whitespace-nowrap ">
           <FaParking className="text-lg" />
-          {listing.parking ? "Parking spot" : "No Parking"}
+          {listing.parking ? t("Parking_spot") : t("no_park")}
         </li>
         <li className="flex items-center gap-1 whitespace-nowrap ">
           <FaChair className="text-lg" />
-          {listing.furnished ? "Furnished" : "Unfurnished"}
+          {listing.furnished ? t("furnished") : t("unfurnished")}
         </li>
       </ul>
 
@@ -480,7 +536,7 @@ const TexteArea = ({
             onClick={() => setContact(true)}
             className="bg-black text-white font-bold rounded-3xl uppercase hover:opacity-95 p-3 "
           >
-            Contact Email
+            {t("contact_mail")}
           </button>
         )}
         {contact && <Contact listing={listing} />}
@@ -489,7 +545,7 @@ const TexteArea = ({
           disabled={isSendingMessage}
           className="w-full bg-black text-white font-bold rounded-3xl uppercase hover:opacity-95 p-3"
         >
-          {isSendingMessage ? "Sending..." : "Send WhatsApp Message"}
+          {isSendingMessage ? t("sending") : t("send_whatsapp_message")}
         </button>
       </div>
     </main>
