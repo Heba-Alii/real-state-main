@@ -1,12 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 
 const MicroDeveloperSignUp = () => {
   const [formData, setFormData] = useState({});
+  const [language, setLanguage] = useState("EN");
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [developers, setDevelopers] = useState([]);
   const navigate = useNavigate();
+  const arabicNamesMap = {
+    "Bin Ghatti ⭐": " بن غاطي⭐ ",
+    "Ellington Properties": "إلينغتون العقارية",
+    "Sobha Realty ⭐": " شوبا⭐ ",
+    "AZIZI": " عزيزي",
+    "DANUBE Properties": "دانوب العقارية",
+    "Meraas ⭐": "  ميراس⭐ ",
+    "LEOS": "ليوس",
+    "Reportage Prime Properties": "ريبورتاج برايم العقارية",
+    "EBDAA": "إبداع"
+  };
 
   useEffect(() => {
     const fetchDevelopers = async () => {
@@ -86,62 +102,73 @@ const MicroDeveloperSignUp = () => {
           <div className='text-center md:text-left'>
 
             <div className='my-5 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300'>
-              <p className='mx-4 mb-0 text-center text-black font-bold text-2xl'>Sign Up</p>
+              <p className='mx-4 mb-0 text-center text-black font-bold text-2xl'>{t("sign_up")}</p>
             </div>
             {/* Username input */}
             <input
-              className='text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded'
+              dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+              className='text-md w-full px-4 py-2 border border-solid border-gray-300 rounded'
               type='text'
-              placeholder='Username'
+              placeholder={t("username")}
               id='username' // Match the id to your form data
               onChange={handleChange} // Handle input change
             />
             {/* Email input */}
             <input
-              className='text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4'
+              dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+              className='text-md w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4'
               type='text'
-              placeholder='Email Address'
+              placeholder={t("e-mail")}
               id='email' // Match the id to your form data
               onChange={handleChange} // Handle input change
             />
             {/* Password input */}
             <input
-              className='text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4'
+              dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+              className='text-md w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4'
               type='password'
-              placeholder='Password'
+              placeholder={t("pass")}
               id='password' // Match the id to your form data
               onChange={handleChange} // Handle input change
             />
             {/* Developer selection */}
             <select
+              dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
               id='preferredDeveloper'
-              className='text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4'
+              className='text-md w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4'
               onChange={handleChange}
             >
-              <option value=''>Select a Developer</option>
+              <option
+                value=''>{t("select_dev")}</option>
               {developers.map((developer) => (
                 <option key={developer._id} value={developer.username}>
-                  {developer.username}
+                  {isArabic ? arabicNamesMap[developer.username.trim()] || developer.username : developer.username}
                 </option>
               ))}
+
             </select>
             {/* Sign up button */}
             <div className='text-center md:text-center'>
               <button
-                className=' mt-4 bg-black hover:bg-yellow-700 font-bold px-4 py-2 text-white uppercase rounded text-xs tracking-wider'
+                className=' mt-4 bg-black hover:bg-yellow-700 font-bold px-4 py-2 text-white uppercase rounded text-md tracking-wider'
                 type='submit'
                 onClick={handleSubmit} // Handle form submission
               >
-                Sign Up
+                {t("sign_up")}
               </button>
             </div>
             {/* Error message display */}
-            {error && <p className='text-red-500 mt-5'>{error}</p>}
+            {error && (
+              <p className='text-red-500 mt-5 text-center'>
+                {i18n.language === 'ar' ? ' حدث خطأ في التنفيذ! يرجى المحاولة مرة أخرى' : error}
+              </p>
+            )}
             {/* Already have an account link */}
-            <div className='mt-4 font-semibold text-sm text-slate-500 text-center md:text-left'>
-              Already have an account?{' '}
+            <div className='mt-4 font-semibold text-sm text-slate-500 text-center' dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+            >
+              {t("have_account")}{' '}
               <Link className='text-yellow-600 hover:underline hover:underline-offset-4' to='/sign-in'>
-                Sign In
+                {t("sign_in")}
               </Link>
             </div>
           </div>

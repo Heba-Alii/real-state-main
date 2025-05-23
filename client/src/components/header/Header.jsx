@@ -57,8 +57,8 @@ export default function Header() {
                   }`}
               >
                 {t("AR_REALSTATE")}
-              </span>          
-                </h1>
+              </span>
+            </h1>
           </Link>
           <ArOffersButton />
         </div>
@@ -127,9 +127,12 @@ export default function Header() {
             )}
           </div>
 
-          <li className="hidden sm:inline text-white font-bold hover:text-yellow-400 text-lg">
-            <Link to="/sign-in">{t("sign_in")}</Link>
-          </li>
+          {!currentUser && (
+            <li className="hidden sm:inline text-white font-bold hover:text-yellow-400 text-lg">
+              <Link to="/sign-in">{t("sign_in")}</Link>
+            </li>
+          )}
+
 
           {isAdmin && (
             <>

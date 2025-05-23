@@ -53,7 +53,6 @@ export default function SignUp() {
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
           <input
             dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
-
             type='text'
             placeholder={t("username")}
             className='border p-3 rounded-lg'

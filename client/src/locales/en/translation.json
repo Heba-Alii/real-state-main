@@ -41,5 +41,11 @@
   "user": "User",
   "developer": "Developer",
   "micro": "MicroDeveloper",
-  "username": "username"
+  "username": "username",
+  "sign_up_dev": "Sign Up for Developer",
+  "enter_username": "Enter your username",
+  "enter_email": "Enter your email",
+  "enter_pass": "Enter your password",
+  "have_account": "Already have an account?",
+  "select_dev": "Select a Developer"
 }
