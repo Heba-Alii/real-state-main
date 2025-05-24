@@ -18,6 +18,9 @@ function toArabicNumber(number) {
 
 
 
+const formatNumber = (num) => {
+  return i18n.language === 'ar' ? toArabicNumber(num) : num;
+};
 
 const TexteArea = ({
   listing,
@@ -403,78 +406,108 @@ const TexteArea = ({
 
 
 
-        <div>
+        <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
           {showMinMax ? (
             <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
 
               className='gap-2 '>
               {listing.internalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>{t("internal_area")} </span>
-                  {listing.internalAreaMin}
+                  <span className='font-semibold text-black'>{t("internal_area")}{' '}</span>
+                  {i18n.language === 'ar' ? toArabicNumber(listing.internalAreaMin) : listing.internalAreaMin}
                   {listing.internalAreaMax !== 0 && (
                     <>
                       <span className='font-semibold text-black'> - </span>
-                      {listing.internalAreaMax}
+                      {i18n.language === 'ar' ? toArabicNumber(listing.internalAreaMax) : listing.internalAreaMax}
                     </>
-                  )} {t("sqft")}
+                  )}
+                  {' '}{t("sqft")}
                 </p>
               )}
+
+
               {listing.externalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>{t("external_area")} </span>
-                  {listing.externalAreaMin}
+                  <span className='font-semibold text-black'>{t("external_area")}{' '}</span>
+                  {i18n.language === 'ar' ? toArabicNumber(listing.externalAreaMin) : listing.externalAreaMin}
                   {listing.externalAreaMax !== 0 && (
                     <>
                       <span className='font-semibold text-black'> - </span>
-                      {listing.externalAreaMax}
+                      {i18n.language === 'ar' ? toArabicNumber(listing.externalAreaMax) : listing.externalAreaMax}
                     </>
-                  )} {t("sqft")}
+                  )}
+                  {' '}{t("sqft")}
                 </p>
               )}
+
+
               {listing.totalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>{t("total_area")}</span>
-                  {listing.totalAreaMin}
+                  <span className='font-semibold text-black'>{t("total_area")}{' '}</span>
+                  {i18n.language === 'ar' ? toArabicNumber(listing.totalAreaMin) : listing.totalAreaMin}
                   {listing.totalAreaMax !== 0 && (
                     <>
                       <span className='font-semibold text-black'> - </span>
-                      {listing.totalAreaMax}
+                      {i18n.language === 'ar' ? toArabicNumber(listing.totalAreaMax) : listing.totalAreaMax}
                     </>
-                  )} {t("sqft")}
+                  )}
+                  {' '}{t("sqft")}
                 </p>
               )}
+
             </div>
           ) : (
             <div className='gap-2 '>
-              {listing.internalAreaMin !== 0 && (
+              {/* {listing.internalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
                   <span className='font-semibold text-black'>{t("internal_area")}</span>
                   {listing.internalAreaMin}{t("sqft")}
                 </p>
+              )} */}
+              {listing.internalAreaMin !== 0 && (
+                <p className='text-slate-800 pb-2'>
+                  <span className='font-semibold text-black'>{t("internal_area")}{' '}</span>
+                  {i18n.language === 'ar'
+                    ? toArabicNumber(listing.internalAreaMin)
+                    : listing.internalAreaMin}
+                  {' '} {t("sqft")}
+                </p>
               )}
+
               {listing.externalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>{t("external_area")} </span>
-                  {listing.externalAreaMin}{t("sqft")}
+                  <span className='font-semibold text-black'>{t("external_area")}{' '}</span>
+                  {i18n.language === 'ar'
+                    ? toArabicNumber(listing.externalAreaMin)
+                    : listing.externalAreaMin}
+                  {' '} {t("sqft")}
                 </p>
               )}
+
               {listing.totalAreaMin !== 0 && (
                 <p className='text-slate-800 pb-2'>
-                  <span className='font-semibold text-black'>{t("total_area")}</span>
-                  {listing.totalAreaMin}{t("sqft")}
+                  <span className='font-semibold text-black'>{t("total_area")}{' '}</span>
+                  {i18n.language === 'ar'
+                    ? toArabicNumber(listing.totalAreaMin)
+                    : listing.totalAreaMin}
+                  {' '} {t("sqft")}
                 </p>
               )}
+
             </div>
           )}
 
+
           {listing.BUA !== 0 && (
-            <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
-              className='text-slate-800'>
-              <span className='font-semibold text-black'>{t("built-Up_area")} : </span>
-              {listing.BUA} {t("sqft")}
+            <p className='text-slate-800'>
+              <span className='font-semibold text-black'>{t("built-Up_area")}{' '} : </span>
+              {i18n.language === 'ar'
+                ? toArabicNumber(listing.BUA)
+                : listing.BUA}
+              {' '}{t("sqft")}
             </p>
           )}
+
         </div>
 
       </div>
