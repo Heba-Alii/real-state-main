@@ -100,11 +100,42 @@ const TexteArea = ({
     "commercial building /commercial property": "مبنى تجاري / عقار تجاري"
 
   };
+  const addressTranslations = {
+    "Business Bay": "الخليج التجاري",
+    "Downtown Dubai": "وسط مدينة دبي",
+    "Dubai Marina": "مرسى دبي",
+    "Jumeirah": "جميرا",
+    "Palm Jumeirah": "نخلة جميرا",
+    "Dubai": "دبي",
+    "United Arab Emirates": "الإمارات العربية المتحدة",
+    "Sheikh Zayed Road": "شارع الشيخ زايد",
+    "Jebel Ali": "جبل علي",
+    "Siniya Island": "جزيرة صينية",
+    "City of Arabia": "مدينة العرب",
+    "UAE": "الإمارات العربية المتحدة",
+    "Emirates City": "مدينة الإمارات",
+    "Shk. Mohammad Bin Zayed Road": "شارع الشيخ محمد بن زايد",
+    "in": "في",
+    "TYPE": "النوع",
+    "Wadi Al Safa Dubailand": "وادي الصفا دبي لاند",
+    "Village": "قرية",
+    "Jumeirah Village": "قرية جميرا",
+    "Circle": "دائرة"
+  };
+
 
   // console.log(listing)
   // console.log(offerData.discountPercentage)
   //console.log('realEstateType:', listing.realEstateType);
 
+  function translateAddress(address) {
+    if (!address) return "";
+    let translated = address;
+    Object.entries(addressTranslations).forEach(([en, ar]) => {
+      translated = translated.replace(en, ar);
+    });
+    return translated;
+  }
 
   return (
     <main>
@@ -127,10 +158,13 @@ const TexteArea = ({
           </div>
         )}
 
-        <div className="flex items-center  gap-2 text-slate-600  text-sm">
+        <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+          className="flex items-center  gap-2 text-slate-600  text-sm">
           <p className="flex items-center mt-2 gap-2 text-yellow-600  text-sm">
             <FaMapMarkerAlt className="text-yellow-600" />
-            {listing.address}
+            {/* {listing.address} */}
+            {i18n.language === 'ar' ? ` ${translateAddress(listing.address)}` : ` ${listing.address}`}
+
           </p>
           <p className="flex items-center mt-2 gap-2 text-yellow-600  text-sm">
             <FaMapMarkerAlt className="text-yellow-600" />
@@ -138,7 +172,10 @@ const TexteArea = ({
           </p>
           <p className="flex items-center mt-2 gap-2 text-yellow-600  text-sm">
             <FaMapMarkerAlt className="text-yellow-600" />
-            {listing.propertyAddressInProject}
+            {/* {listing.propertyAddressInProject} */}
+            {i18n.language === 'ar'
+              ? translateAddress(listing.propertyAddressInProject)
+              : listing.propertyAddressInProject}
           </p>
         </div>
         <div
@@ -224,9 +261,11 @@ const TexteArea = ({
             )}
           </>
         ) : (
-          <p className="text-slate-800 text-2xl">
-            <span className="font-bold text-black">{t("price")}</span>
-            Available On Request
+          <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+            className="text-slate-800 text-2xl">
+            <span className="font-bold text-black underline">
+              {t("price")}</span>
+            {t("available_on_request")}
           </p>
         )}
 
