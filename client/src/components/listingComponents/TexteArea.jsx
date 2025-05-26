@@ -14,10 +14,6 @@ function toArabicNumber(number) {
   const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
   return number.toString().replace(/\d/g, digit => arabicDigits[digit]);
 }
-
-
-
-
 const formatNumber = (num) => {
   return i18n.language === 'ar' ? toArabicNumber(num) : num;
 };
@@ -60,16 +56,6 @@ const TexteArea = ({
     const message =
       `Hi, I'm interested in the property: ${name} - ${formattedType}.\n` +
       `Description: ${description}\n`;
-    // +
-    // `Address: ${address}\n` +
-    // `Investment Type: ${InvestmentTypeDetails}\n` +
-    // `Price: ${PriceMin.toLocaleString('en-US')} ${type === 'rent' ? '/ month' : ''}\n` +
-    // `Bedrooms: ${bedrooms} ${bedrooms > 1 ? 'beds' : 'bed'}\n` +
-    // `Bathrooms: ${bathrooms} ${bathrooms > 1 ? 'baths' : 'bath'}\n` +
-    // `Parking: ${parking ? 'Parking spot' : 'No Parking'}\n` +
-    // `Furnished: ${furnished ? 'Furnished' : 'Unfurnished'}`;
-
-    // console.log(message); // Log the constructed message to check
 
     return encodeURIComponent(message);
   };
@@ -120,13 +106,85 @@ const TexteArea = ({
     "Wadi Al Safa Dubailand": "وادي الصفا دبي لاند",
     "Village": "قرية",
     "Jumeirah Village": "قرية جميرا",
-    "Circle": "دائرة"
+    "Circle": "دائرة",
+    "Studio": "استوديو",
+    "BedRoom": "غرفة نوم",
+    "bedrooms": " غرف نوم",
+    "Street": "شارع",
+    "Sheikh Zayed": "الشيخ زايد",
+    "Unit": "وحدة"
+
+  };
+  const nameTranslations = {
+    "studio": "ستوديو",
+    "bedroom": "غرفة نوم",
+    "1bedroom": "١ غرفة نوم",
+    "2bedroom": "٢ غرفة نوم",
+    "3bedroom": "٣ غرفة نوم",
+    "1br": "١ غرفة نوم",
+    "2br": "٢ غرفة نوم",
+    "3br": "٣ غرفة نوم",
   };
 
+  function translateName(name) {
+    if (!name) return "";
 
-  // console.log(listing)
-  // console.log(offerData.discountPercentage)
-  //console.log('realEstateType:', listing.realEstateType);
+    // Replace digits with Arabic numbers
+    let replacedNumbers = name.replace(/\d+/g, num => toArabicNumber(num));
+
+    // Lowercase and trim for lookup
+    const lowerName = replacedNumbers.toLowerCase().trim();
+
+    // Try full exact match in translation dictionary
+    if (nameTranslations[lowerName]) {
+      return nameTranslations[lowerName];
+    }
+
+    // Replace words from dictionary in string
+    for (const [enWord, arWord] of Object.entries(nameTranslations)) {
+      const regex = new RegExp(enWord, "gi");
+      replacedNumbers = replacedNumbers.replace(regex, arWord);
+    }
+
+    return replacedNumbers;
+  }
+
+
+  const investmentTypeTranslations = {
+    'payment plan': i18n.language === 'ar' ? 'خطة سداد' : 'Payment Plan',
+    'ready': i18n.language === 'ar' ? 'جاهز' : 'Ready',
+    'handover': i18n.language === 'ar' ? 'تسليم' : 'Handover',
+  };
+
+  const investmentTypeDetailsTranslations = {
+    "during construction": "أثناء الإنشاء",
+    "on handover": "عند التسليم",
+    "ready": "جاهز"
+  };
+  const translateInvestmentDetails = (text) => {
+    if (!text) return "";
+
+    return text
+      .split(",") // split by comma
+      .map((part) => {
+        // find the text part to translate
+        const match = Object.keys(investmentTypeDetailsTranslations).find((key) =>
+          part.toLowerCase().includes(key)
+        );
+
+        if (match) {
+          // replace the English part with Arabic
+          return part.replace(
+            new RegExp(match, "i"),
+            investmentTypeDetailsTranslations[match]
+          );
+        }
+        return part;
+      })
+      .join("،") // Arabic comma
+      .replace(/\d+/g, (digit) => toArabicNumber(digit)) // convert numbers to Arabic if needed
+      .replace(/%/g, "٪"); // convert % symbol to Arabic
+  };
 
   function translateAddress(address) {
     if (!address) return "";
@@ -140,7 +198,14 @@ const TexteArea = ({
   return (
     <main>
       <div className="flex flex-col max-4xl mx-auto p-3 my-7 gap-4 ">
-        <p className="text-2xl font-bold text-center ">{listing.name} </p>
+        <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+
+          className="text-2xl font-bold text-center ">
+
+          {/* {listing.name} */}
+          {i18n.language === 'ar' ? translateName(listing.name) : listing.name?.trim()}
+
+        </p>
 
         {listing && offerData && offerData.length !== 0 && (
           <div>
@@ -159,25 +224,29 @@ const TexteArea = ({
         )}
 
         <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
-          className="flex items-center  gap-2 text-slate-600  text-sm">
-          <p className="flex items-center mt-2 gap-2 text-yellow-600  text-sm">
-            <FaMapMarkerAlt className="text-yellow-600" />
-            {/* {listing.address} */}
-            {i18n.language === 'ar' ? ` ${translateAddress(listing.address)}` : ` ${listing.address}`}
+          className="flex items-center gap-2 text-slate-600 text-sm">
 
-          </p>
-          <p className="flex items-center mt-2 gap-2 text-yellow-600  text-sm">
+          <p className="flex items-center mt-2 gap-2 text-yellow-600 text-sm">
             <FaMapMarkerAlt className="text-yellow-600" />
-            {listing.projectName}
-          </p>
-          <p className="flex items-center mt-2 gap-2 text-yellow-600  text-sm">
-            <FaMapMarkerAlt className="text-yellow-600" />
-            {/* {listing.propertyAddressInProject} */}
             {i18n.language === 'ar'
-              ? translateAddress(listing.propertyAddressInProject)
-              : listing.propertyAddressInProject}
+              ? translateAddress(listing.address?.trim() || '')
+              : (listing.address?.trim() || '')}
           </p>
+
+          <p className="flex items-center mt-2 gap-2 text-yellow-600 text-sm">
+            <FaMapMarkerAlt className="text-yellow-600" />
+            {listing.projectName?.trim() || ''}
+          </p>
+
+          <p className="flex items-center mt-2 gap-2 text-yellow-600 text-sm">
+            <FaMapMarkerAlt className="text-yellow-600" />
+            {i18n.language === 'ar'
+              ? translateAddress(listing.propertyAddressInProject?.trim() || '')
+              : (listing.propertyAddressInProject?.trim() || '')}
+          </p>
+
         </div>
+
         <div
           dir={isArabic ? "rtl" : "ltr"}
           className="flex justify-start gap-4 ">
@@ -268,33 +337,47 @@ const TexteArea = ({
             {t("available_on_request")}
           </p>
         )}
+        <p
+          className="text-slate-800">
+          <span
+            dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="font-semibold text-black block mt-2 underline">
 
 
-
-
-
-        <p className="text-slate-800">
+            {listing.InvestmentType
+              ? investmentTypeTranslations[listing.InvestmentType.toLowerCase()] || listing.InvestmentType
+              : t('investmentType')}
+            :
+          </span>
+          {investmentTypeDetailsTranslations[listing.InvestmentTypeDetails?.toLowerCase()] ||
+            listing.InvestmentTypeDetails ||
+            t('investmentTypeDetails')}
+        </p>
+        {/* <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="text-slate-800">
           <span className="font-semibold text-black block mt-2 underline">
             {listing.InvestmentType
-              ? listing.InvestmentType.charAt(0).toUpperCase() +
-              listing.InvestmentType.slice(1)
-              : t('investmentType')}{" "}
-            :{" "}
+              ? i18n.language === "ar"
+                ? investmentTypeTranslations[listing.InvestmentType.trim().toLowerCase()] || listing.InvestmentType
+                : listing.InvestmentType.trim().charAt(0).toUpperCase() + listing.InvestmentType.trim().slice(1)
+              : t('investmentType')}
+            :
           </span>
 
-          {/* <span className='font-semibold text-black'> {listing.InvestmentType || 'Investment Type'} - </span> */}
-          {listing.InvestmentTypeDetails || t('investmentTypeDetails')}
-        </p>
+          {i18n.language === "ar"
+            ? translateInvestmentDetails(listing.InvestmentTypeDetails?.trim()) || t("investmentTypeDetails")
+            : listing.InvestmentTypeDetails?.trim() || t("investmentTypeDetails")}
+        </p> */}
 
         {listing.type === "rent" && (
-          <p className="text-slate-800">
-            <span className="font-semibold text-black">Rental Type : </span>
+          <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+            className="text-slate-800">
+            <span className="font-semibold text-black">{t("rental_type")}{":"} </span>
             {listing.rentalType || "Rental Type"}
           </p>
         )}
 
         {listing && listing.paymentType === "cash" && (
-          <p className="text-slate-800">
+          <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+            className="text-slate-800">
             <span className="font-semibold text-black">{t("cashAmount")} : </span>
             {listing.cashAmount} {t("aed")}
           </p>

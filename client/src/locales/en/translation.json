@@ -106,5 +106,7 @@
   "contact": "Contact",
   "for": "for",
   "see_details": "Click To See Details",
-  "available_on_request": "Available On Request"
+  "available_on_request": "Available On Request",
+  "rental_type": "Rental Type",
+  "Something_went_wrong":"Something went wrong!"
 }

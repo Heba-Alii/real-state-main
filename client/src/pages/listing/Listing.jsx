@@ -7,6 +7,7 @@ import VideoPlayer from "../../components/listingComponents/VideoPlayer";
 import FileViewer from "../../components/listingComponents/FileViewer";
 
 import TexteArea from "../../components/listingComponents/TexteArea";
+import { useTranslation } from "react-i18next";
 
 import SwiperCore from "swiper";
 import { useSelector } from "react-redux";
@@ -20,6 +21,9 @@ export default function Listing() {
   const { currentUser } = useSelector((state) => state.user || {});
 
   SwiperCore.use([Navigation]);
+  const [language, setLanguage] = useState("EN");
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -42,6 +46,25 @@ export default function Listing() {
       `https://wa.me/971588247858?text=Hi%2C%20I%27m%20interested%20in%20your%20property%20listing.`
     );
   };
+  const arabicNamesMap = {
+    "Bin Ghatti ⭐": " بن غاطي⭐ ",
+    "Ellington Properties": "إلينغتون العقارية",
+    "Sobha Realty ⭐": " شوبا⭐ ",
+    "AZIZI": " عزيزي",
+    "DANUBE Properties": "دانوب العقارية",
+    "Meraas ⭐": "  ميراس⭐ ",
+    "LEOS": "ليوس",
+    "Reportage Prime Properties": "ريبورتاج برايم العقارية",
+    "EBDAA": "إبداع"
+  };
+
+
+  function getTranslatedOwner(owner, language) {
+    if (language === 'ar') {
+      return arabicNamesMap[owner] || owner;
+    }
+    return owner;
+  }
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -189,21 +212,21 @@ export default function Listing() {
 
   return (
     <main>
-      {loading && 
-      
-      <main className="flex justify-center items-start min-h-screen py-7">
-      <div className="flex justify-center items-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-      </div>
-    </main> 
-      
-      
-      // <p className="text-center my-7 text-2xl">Loading... </p>
-      
-      
+      {loading &&
+
+        <main className="flex justify-center items-start min-h-screen py-7">
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          </div>
+        </main>
+
+
+        // <p className="text-center my-7 text-2xl">Loading... </p>
+
+
       }
       {error && (
-        <p className="text-center my-7 text-2xl">Something went wrong!</p>
+        <p className="text-center my-7 text-2xl">{t("Something_went_wrong")}</p>
       )}
       {listing && !loading && !error && (
         <div>
@@ -219,10 +242,10 @@ export default function Listing() {
               className="font-bold xl:text-2xl text-xl text-center "
               style={{
                 // color: color ? color : "#fff",
-                color :"#fff",
+                color: "#fff",
               }}
             >
-              {owner}
+              {getTranslatedOwner(owner, i18n.language)}
             </p>
           </div>
 

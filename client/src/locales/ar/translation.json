@@ -106,5 +106,7 @@
   "contact": "للتواصل",
   "for": "بشأن",
   "see_details": "إضغط لمزيد من التفاصيل",
-  "available_on_request": "متوفر عند الطلب"
+  "available_on_request": "متوفر عند الطلب",
+   "rental_type":"نوع الإيجار",
+   "Something_went_wrong":"! حدث خطأ ما"
 }
