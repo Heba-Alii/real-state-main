@@ -4,6 +4,8 @@ import ListingItem from "../components/ListingItem";
 import { Link, useLocation } from "react-router-dom";
 import { FaHome, FaSort, FaTypo3, FaUser } from "react-icons/fa";
 import { FaSearch, FaTags, FaCar, FaMoneyCheckAlt } from "react-icons/fa";
+import { t } from "i18next";
+
 
 
 export default function SearchProperties() {
@@ -22,6 +24,7 @@ export default function SearchProperties() {
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
   const [showMore, setShowMore] = useState(false);
+
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -343,14 +346,17 @@ export default function SearchProperties() {
   //     </div>
   //   );
   return (
-    <div className="flex flex-col md:flex-row bg-black min-h-screen">
+    <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+      className="flex flex-col md:flex-row bg-black min-h-screen">
       {/* Sidebar */}
-      <div className="p-6 md:min-h-screen md:w-1/4 bg-black">
+      <div
+        className="p-6 md:min-h-screen md:w-1/4 bg-black">
         <div className="bg-gray-900 rounded-2xl shadow-x`l p-6 mt-20">
-          <div className="flex justify-between items-center mb-6 text-white">
+          <div
+            className="flex justify-between items-center mb-6 text-white">
             <div className="flex items-center gap-2 font-semibold rounded bg-ARcolors-3000 p-2 mr-2">
               <FaHome size={24} />
-              <span>Properties</span>
+              <span>{t("properties")}</span>
             </div>
             <Link
               to="/real-estate-deveoper"
@@ -359,7 +365,7 @@ export default function SearchProperties() {
             >
               <div className="flex items-center gap-2 ">
                 <FaUser size={20} />
-                <span className="font-semibold">Developer</span>
+                <span className="font-semibold">{t("developer")}</span>
               </div>
             </Link>
           </div>
@@ -370,7 +376,7 @@ export default function SearchProperties() {
 
               type="text"
               id="searchTerm"
-              placeholder="Search..."
+              placeholder={t("search")}
               className="bg-white border border-gray-600 rounded-lg p-3 text-black font-bold"
               value={sidebardata.searchTerm}
               onChange={handleChange}
@@ -381,7 +387,7 @@ export default function SearchProperties() {
 
 
                 <FaTags size={24} />
-                <label className="block font-semibold mb-2 ml-2 underline">Type:</label>
+                <label className="block font-semibold mb-2 ml-2 underline">{t("type")}</label>
               </div>
 
               <div className="space-y-2">
@@ -489,7 +495,7 @@ export default function SearchProperties() {
 
       {/* Main Content */}
       <div className="flex-1 bg-black text-white">
-        <h1 className="text-3xl font-semibold text-center p-6">Listing Results</h1>
+        <h1 className="text-3xl font-semibold text-center p-6">{t("listing_results")}</h1>
 
         {/* <div className="p-7 flex flex-wrap gap-4 font-bold"> */}
         <div className="p-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-bold">

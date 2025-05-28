@@ -108,5 +108,18 @@
   "see_details": "Click To See Details",
   "available_on_request": "Available On Request",
   "rental_type": "Rental Type",
-  "Something_went_wrong":"Something went wrong!"
+  "Something_went_wrong": "Something went wrong!",
+  "listing_results": "Listing Results",
+  "properties": "Properties",
+  "developer": "Developer",
+  "search": "Search...",
+  "type": "Type:",
+  "all": "All",
+  "sale": "Sale",
+  "buy": "Buy",
+  "rent": "Rent",
+  "amenities": "Amenities:",
+  "parking": "Parking",
+  "sort": "Sort",
+  "price_high_to_low":"Price High to Low"
 }

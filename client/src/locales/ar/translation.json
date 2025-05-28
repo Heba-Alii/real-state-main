@@ -107,6 +107,12 @@
   "for": "بشأن",
   "see_details": "إضغط لمزيد من التفاصيل",
   "available_on_request": "متوفر عند الطلب",
-   "rental_type":"نوع الإيجار",
-   "Something_went_wrong":"! حدث خطأ ما"
+  "rental_type": "نوع الإيجار",
+  "Something_went_wrong": "! حدث خطأ ما",
+  "listing_results": "قوائم العقارات",
+  "properties": "العقارات",
+  "developer": "المطور",
+  "search": "البحث...",
+  "type": "النوع:",
+  "sort": "فرز"
 }
