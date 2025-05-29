@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 
 
 
+
 export default function ListingItem({ listing }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
 
   const nameTranslations = {
@@ -18,20 +20,46 @@ export default function ListingItem({ listing }) {
     "pool": "حمام سباحة"
 
   };
-
+  const addressTranslations = {
+    "dubai": "دبي",
+    "united arab emirates": "الإمارات العربية المتحدة",
+    "abu dhabi": "أبوظبي",
+    "sharjah": "الشارقة",
+    "ajman": "عجمان",
+    "business bay": "الخليج التجاري",
+    "jumeirah": "جميرا",
+    "marina": "مرسى دبي",
+    "palm": "نخلة جميرا",
+    "island": "جزيرة"
+  };
+  //name
   function translateName(name, language) {
     if (!name) return "";
 
-    // If English, return as is
     if (language !== 'ar') return name;
 
-    // Convert all digits to Arabic
     let translated = name.replace(/\d/g, d => toArabicNumber(d));
 
-    // Replace known English words with Arabic
-    for (const key in nameTranslations) {
-      const pattern = new RegExp(key, "gi"); // case-insensitive
+    const sortedKeys = Object.keys(nameTranslations).sort((a, b) => b.length - a.length);
+
+    for (const key of sortedKeys) {
+      const pattern = new RegExp(key, "gi");
       translated = translated.replace(pattern, nameTranslations[key]);
+    }
+
+    return translated;
+  }
+  //address
+  function translateAddress(address, language) {
+    if (!address) return "";
+
+    if (language !== 'ar') return address;
+
+    let translated = address.toLowerCase();
+
+    for (const key in addressTranslations) {
+      const pattern = new RegExp(key, "gi");
+      translated = translated.replace(pattern, addressTranslations[key]);
     }
 
     return translated;
@@ -39,7 +67,10 @@ export default function ListingItem({ listing }) {
 
   function toArabicNumber(number) {
     const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-    return number.toString().replace(/\d/g, d => arabicDigits[d]);
+    const formatted = Number(number).toLocaleString('en-US'); // e.g. 1,000
+
+    return formatted.toString().replace(/\d/g, d => arabicDigits[d])
+      .replace(/,/g, '٬');
   }
 
   return (
@@ -61,43 +92,51 @@ export default function ListingItem({ listing }) {
           <div className='flex items-center gap-1'>
             <MdLocationOn className='h-4 w-4 text-yellow-700' />
             <p className='text-sm text-gray-600 truncate w-full'>
-              {listing.address}
+              {translateAddress(listing.address, i18n.language)}
             </p>
           </div>
 
 
 
-          <div className='text-yellow-700 flex gap-2 text-sm mt-5'>
+          <div className='text-yellow-700 flex gap-2 text-md mt-5'>
             {listing.bedrooms !== 0 && (
               <div className="font-bold flex items-center gap-2">
                 <FaBed size={20} />
 
-                {listing.bedrooms > 1
+                {/* {listing.bedrooms > 1
                   ? `${listing.bedrooms} `
-                  : `${listing.bedrooms} `}
+                  : `${listing.bedrooms} `} */}
+                {isArabic ? toArabicNumber(listing.bedrooms) : listing.bedrooms}
+
               </div>
             )}
             {listing.bathrooms !== 0 && (
               <div className="font-bold flex items-center gap-2">
                 <FaBath size={15} />
 
-                {listing.bathrooms > 1
+                {/* {listing.bathrooms > 1
                   ? `${listing.bathrooms} `
-                  : `${listing.bathrooms} `}
+                  : `${listing.bathrooms} `} */}
+                {isArabic ? toArabicNumber(listing.bathrooms) : listing.bathrooms}
+
               </div>
             )}
             {listing.priceMin !== 0 ? (
               <div className="w-full flex justify-end">
-                <p className='text-yellow-700 font-bold text-md'>
-                  {listing.offer
+                <p className='text-yellow-700 font-bold text-lg'>
+                  {/* {listing.offer
                     ? listing.discountPrice.toLocaleString('en-US')
                     : listing.priceMin.toLocaleString('en-US')} {' '}
-                  AED
+                  {t("aed")} */}
+                  {isArabic
+                    ? toArabicNumber(listing.offer ? listing.discountPrice : listing.priceMin)
+                    : (listing.offer ? listing.discountPrice : listing.priceMin).toLocaleString('en-US')} {' '}
+                  {t('aed')}
                 </p>
               </div>
 
             ) : (
-              <p className='text-slate-500 mt-2 font-semibold '>Available On Request</p>
+              <p className='text-slate-500 mt-2 font-semibold '>{t("available_on_request")}</p>
             )}
 
           </div>

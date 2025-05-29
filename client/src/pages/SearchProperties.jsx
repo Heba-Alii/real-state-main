@@ -346,7 +346,7 @@ export default function SearchProperties() {
   //     </div>
   //   );
   return (
-    <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+    <div
       className="flex flex-col md:flex-row bg-black min-h-screen">
       {/* Sidebar */}
       <div
