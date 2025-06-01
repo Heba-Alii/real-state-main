@@ -112,7 +112,21 @@
   "listing_results": "قوائم العقارات",
   "properties": "العقارات",
   "developer": "المطور",
-  "search": "البحث...",
+  "search": "بحث...",
   "type": "النوع:",
-  "sort": "فرز"
+  "sort": "فرز",
+  "all": "الكل",
+  "sale": "بيع",
+  "buy": "شراء",
+  "rent": "إيجار",
+  "amenities": "المرافق:",
+  "parking": "موقف سيارات",
+  "price_high_to_low": "السعر من الأعلى إلى الأقل",
+  "price_low_to_high": "السعر من الأقل إلى الأعلى",
+  "latest": "الأحدث",
+  "oldest": "الأقدم",
+  "handover": "تسليم",
+  "ready": "جاهز للسكن",
+  "no_listing_found": "لا يوجد قوائم",
+  "payment": "خطة الدفع"
 }

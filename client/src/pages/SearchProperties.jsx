@@ -351,7 +351,8 @@ export default function SearchProperties() {
       {/* Sidebar */}
       <div
         className="p-6 md:min-h-screen md:w-1/4 bg-black">
-        <div className="bg-gray-900 rounded-2xl shadow-x`l p-6 mt-20">
+        <div
+          className="bg-gray-900 rounded-2xl shadow-x`l p-6 mt-20">
           <div
             className="flex justify-between items-center mb-6 text-white">
             <div className="flex items-center gap-2 font-semibold rounded bg-ARcolors-3000 p-2 mr-2">
@@ -400,7 +401,7 @@ export default function SearchProperties() {
                       onChange={handleChange}
                       checked={sidebardata.type === type}
                     />
-                    <span className="capitalize">{type}</span>
+                    <span className="capitalize">{t(type)}</span>
                   </label>
                 ))}
               </div>
@@ -410,7 +411,7 @@ export default function SearchProperties() {
               <div className="flex items-start font-semibold ">
 
                 <FaCar size={24} />
-                <label className="block font-semibold mb-2 ml-2 underline">Amenities:</label>
+                <label className="block font-semibold mb-2 ml-2 underline">{t("amenities")}</label>
               </div>
 
               <div className="space-y-2">
@@ -422,7 +423,7 @@ export default function SearchProperties() {
                     onChange={handleChange}
                     checked={sidebardata.parking}
                   />
-                  <span>Parking</span>
+                  <span>{t("parking")}</span>
                 </label>
                 <label className="flex items-center gap-2">
                   <input
@@ -432,7 +433,7 @@ export default function SearchProperties() {
                     onChange={handleChange}
                     checked={sidebardata.furnished}
                   />
-                  <span>Furnished</span>
+                  <span>{t("furnished")}</span>
                 </label>
               </div>
             </div>
@@ -441,7 +442,7 @@ export default function SearchProperties() {
               <div className="flex items-start font-semibold ">
 
                 <FaSort size={24} />
-                <label className="block font-semibold underline mb-2 ml-1">Sort:</label>
+                <label className="block font-semibold underline mb-2 ml-1">{t("sort")}</label>
               </div>
 
               <select
@@ -450,10 +451,10 @@ export default function SearchProperties() {
                 id="sort_order"
                 className="bg-white border border-gray-600 rounded-lg p-3 w-full text-black font-bold"
               >
-                <option value="priceMin_desc">Price high to low</option>
-                <option value="priceMin_asc">Price low to high</option>
-                <option value="createdAt_desc">Latest</option>
-                <option value="createdAt_asc">Oldest</option>
+                <option value="priceMin_desc">{t("price_high_to_low")}</option>
+                <option value="priceMin_asc">{t("price_low_to_high")}</option>
+                <option value="createdAt_desc">{t("latest")}</option>
+                <option value="createdAt_asc">{t("oldest")}</option>
               </select>
             </div>
 
@@ -461,7 +462,7 @@ export default function SearchProperties() {
               <div className="flex items-start font-semibold">
 
                 <FaMoneyCheckAlt size={24} bg />
-                <label className="block font-semibold mb-2 ml-2 underline">Investment Type:</label>
+                <label className="block font-semibold mb-2 ml-2 underline">{t("investmentType")}</label>
               </div>
               <select
                 onChange={handleChange}
@@ -469,16 +470,16 @@ export default function SearchProperties() {
                 id="InvestmentType"
                 className="bg-white border border-gray-600 rounded-lg p-3 w-full text-black font-bold"
               >
-                <option value="payment Plan">Payment Plan</option>
-                <option value="handover">Handover</option>
-                <option value="ready">Ready</option>
-                <option value="all">All</option>
+                <option value="payment Plan">{t("payment")}</option>
+                <option value="handover">{t("handover")}</option>
+                <option value="ready">{t("ready")}</option>
+                <option value="all">{t("all")}</option>
               </select>
             </div>
 
             <button className="bg-ARcolors-3000 hover:bg-yellow-500 transition text-white font-bold p-3 rounded-lg uppercase ml-10 mr-10 mt-5">
 
-              Search
+              {t("search")}
             </button>
 
           </form>
@@ -501,7 +502,7 @@ export default function SearchProperties() {
         <div className="p-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-bold">
 
           {!loading && listings.length === 0 && (
-            <p className="text-xl">No listing found !</p>
+            <p className="text-xl">{t("no_listing_found")}</p>
           )}
 
           {loading && (
@@ -522,7 +523,7 @@ export default function SearchProperties() {
                 onClick={onShowMoreClick}
                 className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-400"
               >
-                Show More
+                {t("showMore")}
               </button>
             </div>
           )}

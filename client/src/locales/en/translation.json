@@ -121,5 +121,12 @@
   "amenities": "Amenities:",
   "parking": "Parking",
   "sort": "Sort",
-  "price_high_to_low":"Price High to Low"
+  "price_high_to_low": "Price High to Low",
+  "latest": "Latest",
+  "oldest": "Oldest",
+  "price_low_to_high": "Price Low to High",
+  "handover": "Handover",
+  "ready": "Ready",
+  "no_listing_found": "No Listing Found ! ",
+  "payment": "Payment Plan"
 }

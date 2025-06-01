@@ -117,15 +117,14 @@ const TexteArea = ({
   };
   const nameTranslations = {
     "studio": "ستوديو",
+    "bedrooms": "غرف نوم",
     "bedroom": "غرفة نوم",
-    "1bedroom": "١ غرفة نوم",
-    "2bedroom": "٢ غرفة نوم",
-    "3bedroom": "٣ غرفة نوم",
-    "1br": "١ غرفة نوم",
-    "2br": "٢ غرفة نوم",
-    "3br": "٣ غرفة نوم",
-  };
+    "br": "غرفة نوم",
+    "bed": "غرفة نوم",
+    "pool": "حمام سباحة",
+    "office": "مكتب"
 
+  };
   function translateName(name) {
     if (!name) return "";
 

@@ -17,7 +17,9 @@ export default function ListingItem({ listing }) {
     "bedroom": "غرفة نوم",
     "br": "غرفة نوم",
     "bed": "غرفة نوم",
-    "pool": "حمام سباحة"
+    "pool": "حمام سباحة",
+    "office": "مكتب",
+    "retail":"محل تجاري"
 
   };
   const addressTranslations = {
