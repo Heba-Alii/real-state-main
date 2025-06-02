@@ -8,8 +8,20 @@ export default function POPUP({ isOpen, toggleDropdown }) {
   const [loading, setLoading] = useState(false);
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-
   const popupRef = useRef(null);
+
+  const usernameTranslations = {
+    "bin ghatti ⭐": " بن غاطي⭐",
+    "reportage prime properties": "ريبورتاج برايم العقارية"
+  };
+
+  function translateUsername(username, language) {
+    if (!username) return "";
+    if (language !== "ar") return username;
+
+    const key = username.trim().toLowerCase();
+    return usernameTranslations[key] || username;
+  }
 
   const closeDropdown = () => {
     toggleDropdown();
@@ -64,7 +76,8 @@ export default function POPUP({ isOpen, toggleDropdown }) {
   }, [isOpen]);
 
   return (
-    <div className="relative">
+    <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+      className="relative">
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
           <div
@@ -113,8 +126,15 @@ export default function POPUP({ isOpen, toggleDropdown }) {
                           className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-blue-500"
                         />
                         <div>
-                          <h3 className="text-lg font-semibold">{developer.username}</h3>
-                          <p className="text-gray-500">Role :     {`${developer.role.charAt(0).toUpperCase()}${developer.role.slice(1)}`}</p>
+                          <h3 className="text-lg font-semibold">
+                            {/* {developer.username} */}
+                            {translateUsername(developer.username, i18n.language)}
+
+                          </h3>
+                          <p className="text-gray-500">
+                            {t("role")}
+
+                            {`${developer.role.charAt(0).toUpperCase()}${developer.role.slice(1)}`}</p>
                         </div>
                       </li>
                     </Link>
