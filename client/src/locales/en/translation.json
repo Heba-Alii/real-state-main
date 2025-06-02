@@ -128,5 +128,15 @@
   "handover": "Handover",
   "ready": "Ready",
   "no_listing_found": "No Listing Found ! ",
-  "payment": "Payment Plan"
+  "payment": "Payment Plan",
+  "searchTerm": "Search Term...",
+  "Search": "Search",
+  "view_all": "View All",
+  "plan": "PLAN",
+  "TAORMINA": "TAORMINA VILLAGE Townhouses",
+  "note": "NOTE:",
+  "complitin_Q4_2027": "COMPLETION Q4 2027",
+  "We_have_6_different_payment_plans": "We have 6 different payment plans.",
+  "Please_use_AR-20_to_access_these_offers": "Please use AR-20 to access these offers.",
+  "developers_with_offers": "Developers with Offers"
 }

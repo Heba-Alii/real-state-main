@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 
 export default function POPUP({ isOpen, toggleDropdown }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
 
   const popupRef = useRef(null);
 
@@ -82,7 +86,7 @@ export default function POPUP({ isOpen, toggleDropdown }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <h2 className="text-2xl font-bold mb-4 text-center text-white">Developers with Offers</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center text-white">{t("developers_with_offers")}</h2>
             <div className="flex-1">
               {loading ? (
 

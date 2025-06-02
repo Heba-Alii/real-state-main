@@ -128,5 +128,15 @@
   "handover": "تسليم",
   "ready": "جاهز للسكن",
   "no_listing_found": "لا يوجد قوائم",
-  "payment": "خطة الدفع"
+  "payment": "خطة الدفع",
+  "searchTerm": "كلمة البحث...",
+  "Search": "بحث",
+  "view_all": "عرض الكل",
+  "plan": "الخطة",
+  "TAORMINA": "قرية تاورمينا تاون هاوس",
+  "note": "ملاحظة:",
+  "complitin_Q4_2027": "الانتهاء في الربع الرابع من عام ٢٠٢٧",
+  "We_have_6_different_payment_plans": "لدينا ٦ خطط سداد مختلفة.",
+  "Please_use_AR-20_to_access_these_offers": "يرجى استخدام AR-20 للوصول إلى هذه العروض.",
+  "developers_with_offers": "المطورون الذين لديهم عروض"
 }

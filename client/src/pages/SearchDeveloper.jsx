@@ -4,6 +4,8 @@ import { fetchUsers } from "../redux/user/userSlice.js";
 import UserItem from "./UserItem.jsx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHome, FaUser } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
 
 const SearchDeveloper = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,7 +16,8 @@ const SearchDeveloper = () => {
   const location = useLocation();
   const { users: userList } = useSelector(({ user }) => user);
   const usersPerPage = 10;
-
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const filteredUsers = userList?.filter(
     ({ username, email, role }) =>
       (username.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -63,7 +66,8 @@ const SearchDeveloper = () => {
   return (
     <>
 
-      <div className="flex flex-col md:flex-row min-h-screen">
+      <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+        className="flex flex-col md:flex-row min-h-screen">
 
         {/* Sidebar */}
         <div className="md:w-1/4 w-full bg-black text-white p-6">
@@ -75,13 +79,13 @@ const SearchDeveloper = () => {
               >
                 <div className="flex items-center space-x-2 text-white hover:text-yellow-400">
                   <FaHome size={24} />
-                  <span className="font-semibold sm:flex md:hidden lg:hidden xl:flex">properties</span>
+                  <span className="font-semibold sm:flex md:hidden lg:hidden xl:flex">{t("properties")}</span>
                 </div>
               </Link>
 
               <div className="flex items-center gap-2 font-semibold rounded bg-ARcolors-3000 p-2 text-white ml-2">
                 <FaUser size={24} />
-                <span className="font-semibold sm:flex md:hidden lg:hidden xl:flex ">Developer</span>
+                <span className="font-semibold sm:flex md:hidden lg:hidden xl:flex ">{t("developer")}</span>
               </div>
             </div>
 
@@ -89,7 +93,7 @@ const SearchDeveloper = () => {
               <input
                 type="text"
                 id="searchTerm"
-                placeholder="Search Term..."
+                placeholder={t("searchTerm")}
                 className="border rounded-lg p-3 w-full text-black"
                 value={searchQuery}
                 onChange={handleChange}
@@ -101,14 +105,14 @@ const SearchDeveloper = () => {
                   onClick={handleSearch}
                   className="bg-ARcolors-3000 text-white p-3 rounded-lg uppercase hover:opacity-85 flex-1 font-bold"
                 >
-                  Search
+                  {t("Search")}
                 </button>
                 <button
                   type="button"
                   onClick={handleViewAll}
                   className="bg-ARcolors-3000 text-white p-3 rounded-lg uppercase hover:opacity-85 flex-1 font-bold"
                 >
-                  View All
+                  {t("view_all")}
                 </button>
               </div>
             </form>

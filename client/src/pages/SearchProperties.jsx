@@ -5,11 +5,14 @@ import { Link, useLocation } from "react-router-dom";
 import { FaHome, FaSort, FaTypo3, FaUser } from "react-icons/fa";
 import { FaSearch, FaTags, FaCar, FaMoneyCheckAlt } from "react-icons/fa";
 import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 
 export default function SearchProperties() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const [sidebardata, setSidebardata] = useState({
     searchTerm: "",
     type: "all",
@@ -346,7 +349,7 @@ export default function SearchProperties() {
   //     </div>
   //   );
   return (
-    <div
+    <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
       className="flex flex-col md:flex-row bg-black min-h-screen">
       {/* Sidebar */}
       <div

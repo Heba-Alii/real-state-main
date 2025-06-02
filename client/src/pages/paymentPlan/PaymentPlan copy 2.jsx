@@ -13,14 +13,15 @@
 
 // export default App;
 
-
-
 import React from 'react';
-
+import { useTranslation } from "react-i18next";
+const { t, i18n } = useTranslation();
+const isArabic = i18n.language === 'ar';
 const PaymentPlans = () => {
+
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-4xl font-bold mb-4">TAORMINA VILLAGE Townhouses</h1>
+      <h1 className="text-4xl font-bold mb-4">{t("TAORMINA")}</h1>
       <p className="text-lg mb-4">COMPLETION Q4 2027</p>
       <p className="mb-4">
         <strong>NOTE:</strong> We have 6 different payment plans.
@@ -29,7 +30,7 @@ const PaymentPlans = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {paymentPlans.map((plan, index) => (
           <div key={index} className="bg-white border p-4 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-2">PLAN {index + 1}</h2>
+            <h2 className="text-xl font-semibold mb-2">{t("plan")} {index + 1}</h2>
             <p>
               <strong>{plan.downpayment}</strong>
             </p>
@@ -45,8 +46,8 @@ const PaymentPlans = () => {
           </div>
         ))}
       </div>
-       {/* bg-red-700 */}
-        <div className="mt-8 p-4 text-red-700 font-bold text-xl rounded-xl">
+      {/* bg-red-700 */}
+      <div className="mt-8 p-4 text-red-700 font-bold text-xl rounded-xl">
         <p>Please use AR-20 to access these offers.</p>
       </div>
     </div>
