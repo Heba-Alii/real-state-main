@@ -78,8 +78,8 @@
   "sqft": "قدم مربع",
   "baths": "حمامات",
   "bath": "حمام",
-  "beds": "غرف",
-  "bed": "غرفة",
+  "beds": " غرف نوم",
+  "bed": " غرفة نوم",
   "Parking_spot": "موقف سيارات",
   "no_park": "لا يوجد موقف سيارات",
   "unfurnished": "غير مفروش",
@@ -143,5 +143,7 @@
   "we_have": "لدينا",
   "3_different_payment_plans": "خطط سداد مختلفة.",
   "BINGHATTI_PHANTOM": "بن غاطي فانتوم",
-  "Please_use_AR-15_to_access_these_offers": "يرجى استخدام AR-15 للوصول إلى هذه العروض."
+  "Please_use_AR-15_to_access_these_offers": "يرجى استخدام AR-15 للوصول إلى هذه العروض.",
+  "dev": "مطور",
+  "no_listing": "!!لا يوجد قوائم"
 }

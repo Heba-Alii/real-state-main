@@ -26,7 +26,7 @@
 //   }, [id]);
 
 //   // const onShowMoreClick = () => {
-    
+
 //   // };
 
 
@@ -44,7 +44,7 @@
 //           {!showListingsError && listings.length === 0 && (
 //             <p className="text-xl text-slate-700">No listing found!</p>
 //           )}
-         
+
 //         <div className="py-7 flex flex-wrap gap-4">
 //           {!showListingsError &&
 //             listings &&
@@ -126,12 +126,15 @@
 
 import React, { useEffect, useState } from 'react';
 import ListingItem from '../components/ListingItem';
+import { useTranslation } from "react-i18next";
 
 export default function ListingForDeveloper({ id }) {
   const [listings, setListings] = useState([]);
   const [showListingsError, setShowListingsError] = useState(false);
   const [loading, setLoading] = useState(true); // State to manage loading status
-
+  const [language, setLanguage] = useState("EN");
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   useEffect(() => {
     const handleShowListings = async () => {
       try {
@@ -150,10 +153,10 @@ export default function ListingForDeveloper({ id }) {
         setLoading(false); // Set loading to false if an error occurs
       }
     };
-  
+
     handleShowListings();
   }, [id]);
-  
+
 
 
 
@@ -186,16 +189,16 @@ export default function ListingForDeveloper({ id }) {
       {/* Display user's listings */}
 
       {/* If loading is true and listings array is empty, show "Loading..." */}
-       {loading && listings.length === 0 && ( 
-      <main className="flex justify-center items-center min-h-screen py-7">
-  <div className="flex justify-center items-center">
-    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-  </div>
-</main>           )} 
+      {loading && listings.length === 0 && (
+        <main className="flex justify-center items-center min-h-screen py-7">
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          </div>
+        </main>)}
 
 
 
-            {/* <main className="flex justify-center items-center h-screen">
+      {/* <main className="flex justify-center items-center h-screen">
   <div className="flex justify-top items-center">
     <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
   </div>
@@ -206,8 +209,8 @@ export default function ListingForDeveloper({ id }) {
 
 
 
-{/* If loading is true and listings array is empty, show "Loading..." */}
-{/* <div className="flex min-h-screen items-center justify-center">
+      {/* If loading is true and listings array is empty, show "Loading..." */}
+      {/* <div className="flex min-h-screen items-center justify-center">
     <div className="w-1/3">
         <div className="max-w-sm rounded overflow-hidden shadow-lg animate-pulse">
         <div className="h-48 bg-gray-300"></div>
@@ -225,7 +228,7 @@ export default function ListingForDeveloper({ id }) {
 
 
 
-{/* 
+      {/* 
 {loading && listings.length === 0 && (
   <div className="fixed top-0 left-0 w-full flex justify-center">
     <div className="absolute top-1/2 transform -translate-y-1/2">
@@ -233,44 +236,45 @@ export default function ListingForDeveloper({ id }) {
     </div>
   </div>
 )} */}
-{/* 
+      {/* 
   {loading && listings.length > 0 && (
     <div className="flex justify-center ">
       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
     </div>
   )} */}
 
-   
+
       {/* className="flex-1" */}
 
       {/* className="p-4" */}
-       
-       
-        {/* <div  
+
+
+      {/* <div  
 
         > */}
- 
 
 
 
 
-          {/* If loading is false and listings array is not empty, render listings */}
-          {!loading && !showListingsError && listings.length > 0 && (
-            <div className="flex flex-wrap gap-4 justify-center items-center">
-              {listings.map((listing) => (
-                <ListingItem key={listing._id} listing={listing} />
-              ))}
-            </div>
-          )}
-          {/* If loading is false and listings array is empty, show "No listing found!" */}
-          {!loading && !showListingsError && listings.length === 0 && (
-            <p className="text-xl text-white text-center">No listing found!</p>
-          )}
-          {/* If there's an error, show error message */}
-          {showListingsError && (
-            <p className="text-xl text-slate-700"> NO INTERNET CONNECTION ! </p>
-          )}
+
+      {/* If loading is false and listings array is not empty, render listings */}
+      {!loading && !showListingsError && listings.length > 0 && (
+        <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+          className="flex flex-wrap gap-4 justify-center items-center">
+          {listings.map((listing) => (
+            <ListingItem key={listing._id} listing={listing} />
+          ))}
         </div>
-       
+      )}
+      {/* If loading is false and listings array is empty, show "No listing found!" */}
+      {!loading && !showListingsError && listings.length === 0 && (
+        <p className="text-xl text-white text-center">{t("no_listing")}</p>
+      )}
+      {/* If there's an error, show error message */}
+      {showListingsError && (
+        <p className="text-xl text-slate-700"> NO INTERNET CONNECTION ! </p>
+      )}
+    </div>
+
   );
 }

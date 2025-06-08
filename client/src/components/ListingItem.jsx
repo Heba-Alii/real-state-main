@@ -15,11 +15,11 @@ export default function ListingItem({ listing }) {
     "studio": "ستوديو",
     "bedrooms": "غرف نوم",
     "bedroom": "غرفة نوم",
-    "br": "غرفة نوم",
     "bed": "غرفة نوم",
     "pool": "حمام سباحة",
     "office": "مكتب",
-    "retail":"محل تجاري"
+    "retail": "محل تجاري",
+    "\\bbr\\b": "غرفة نوم",
 
   };
   const addressTranslations = {

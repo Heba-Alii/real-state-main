@@ -119,11 +119,23 @@ const TexteArea = ({
     "studio": "ستوديو",
     "bedrooms": "غرف نوم",
     "bedroom": "غرفة نوم",
-    "br": "غرفة نوم",
     "bed": "غرفة نوم",
     "pool": "حمام سباحة",
-    "office": "مكتب"
-
+    "office": "مكتب",
+    "village": "قرية",
+    "villa": "فيلا",
+    "bedroom": "غرفة نوم",
+    "studio": "استوديو",
+    "apartment": "شقة",
+    "townhouse": "تاون هاوس",
+    "sobha": "شوبا",
+    "azizi": "عزيزي",
+    "binghatti": "بن غاطي",
+    "taormina": "تاورمينا",
+    "corner": "زاوية",
+    "luxury": "فاخرة",
+    "retail space": "محل تجاري",
+    "\\bbr\\b": "غرفة نوم",
   };
   function translateName(name) {
     if (!name) return "";

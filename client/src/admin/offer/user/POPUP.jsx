@@ -132,9 +132,11 @@ export default function POPUP({ isOpen, toggleDropdown }) {
 
                           </h3>
                           <p className="text-gray-500">
-                            {t("role")}
-
-                            {`${developer.role.charAt(0).toUpperCase()}${developer.role.slice(1)}`}</p>
+                            {t("role")}{" "}
+                            {developer.role.toLowerCase() === "developer"
+                              ? t("dev")
+                              : `${developer.role.charAt(0).toUpperCase()}${developer.role.slice(1)}`}
+                          </p>
                         </div>
                       </li>
                     </Link>

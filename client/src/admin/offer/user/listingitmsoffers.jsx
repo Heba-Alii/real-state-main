@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
+import { useTranslation } from "react-i18next";
+
 
 export default function ListingItem({ listing, id }) {
   const userId = id;
@@ -11,6 +13,66 @@ export default function ListingItem({ listing, id }) {
   const [error, setError] = useState(null);
   const [offers, setOffers] = useState([]);
   const [newPrice, setNewPrice] = useState(null);
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
+  const formatNumber = (num) => (i18n.language === 'ar' ? toArabicNumber(num) : num);
+  const addressTranslations = {
+    "dubailand": "دبي لاند",
+    "Dubai": "دبي",
+    "Wadi Al Safa": "وادي الصفا",
+    "United Arab Emirates": "الإمارات العربية المتحدة",
+    "Abu Dhabi": "أبوظبي",
+    "jumeirah village circle": "قرية جميرا الدائرية"
+
+  };
+  const nameTranslations = {
+
+    "village": "قرية",
+    "villa": "فيلا",
+    "bedroom": "غرفة نوم",
+    "studio": "استوديو",
+    "apartment": "شقة",
+    "townhouse": "تاون هاوس",
+    "sobha": "شوبا",
+    "azizi": "عزيزي",
+    "binghatti": "بن غاطي",
+    "taormina": "تاورمينا",
+    "corner": "زاوية",
+    "luxury": "فاخرة",
+    "br": "غرفة نوم",
+
+  };
+
+
+  function toArabicNumber(str) {
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return str.toString().replace(/\d/g, d => arabicDigits[d]);
+  }
+
+  function translateAddress(address, language) {
+    if (!address || language !== 'ar') return address?.trim();
+
+    let translated = address.trim(); // Trim before processing
+
+    for (const key in addressTranslations) {
+      const pattern = new RegExp(key, 'gi');
+      translated = translated.replace(pattern, addressTranslations[key]);
+    }
+
+    return translated.trim(); // Trim after translation (optional)
+  }
+  function translateListingName(name, language) {
+    if (!name || language !== 'ar') return name;
+
+    let translated = name.trim().toLowerCase();
+
+    for (const key in nameTranslations) {
+      const pattern = new RegExp(key, 'gi');
+      translated = translated.replace(pattern, nameTranslations[key]);
+    }
+
+    return toArabicNumber(translated);
+  }
 
   useEffect(() => {
     const fetchDataForOffers = async () => {
@@ -35,7 +97,7 @@ export default function ListingItem({ listing, id }) {
         setLoading(false);
         setNewPrice(
           listing.priceMin *
-            ((100 - (offersData[0]?.discountPercentage || 0)) / 100)
+          ((100 - (offersData[0]?.discountPercentage || 0)) / 100)
         );
       } catch (error) {
         console.error("Error fetching offer data:", error);
@@ -50,6 +112,7 @@ export default function ListingItem({ listing, id }) {
   return (
     listing.type !== "rent" && (
       <Link
+        dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
         to={`/listing/${listing._id}`}
         className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:max-w-[330px]"
       >
@@ -61,36 +124,40 @@ export default function ListingItem({ listing, id }) {
           alt="listing cover"
           className="h-[200px] sm:h-[220px] md:h-[260px] w-full object-cover hover:scale-105 transition-scale duration-300"
         />
-        <div className="p-3 flex flex-col gap-2 w-full">
+        <div
+          className="p-3 flex flex-col gap-2 w-full">
           <p className="truncate text-lg font-semibold text-slate-700">
-            {listing.name}
+            {translateListingName(listing.name, i18n.language)}
+
           </p>
           <div className="flex items-center gap-1">
-            <MdLocationOn className="h-4 w-4 text-green-700" />
+            <MdLocationOn className="h-4 w-4 text-yellow-700" />
             <p className="text-sm text-gray-600 truncate w-full">
-              {listing.address}
+              {translateAddress(listing.address, i18n.language)}
             </p>
           </div>
-          <p className="text-sm text-gray-600 line-clamp-2">
+          {/* <p className="text-sm text-gray-600 line-clamp-2">
             {listing.description}
-          </p>
+          </p> */}
           <div className="text-slate-700 flex gap-4 text-xs">
             <div className="font-bold">
+
               {listing.bedrooms > 1
-                ? `${listing.bedrooms} beds`
-                : `${listing.bedrooms} bed`}
+                ? `${formatNumber(listing.bedrooms)} ${t("beds")}`
+                : `${formatNumber(listing.bedrooms)} ${t("bed")}`}
             </div>
             <div className="font-bold">
+
               {listing.bathrooms > 1
-                ? `${listing.bathrooms} baths`
-                : `${listing.bathrooms} bath`}
+                ? `${formatNumber(listing.bathrooms)} ${t("baths")}`
+                : `${formatNumber(listing.bathrooms)} ${t("bath")}`}
             </div>
           </div>
         </div>
         <div className="p-3 ">
           <div className="flex gap-2">
             <h3 className="flex text-lg font-semibold text-slate-700">
-              Offers Code:
+              {t("offer_code")}
             </h3>
             {offers.length > 0 && (
               <div className="text-slate-700 font-semibold text-xl items-end">
@@ -114,6 +181,9 @@ export default function ListingItem({ listing, id }) {
           </div>  */}
         </div>
       </Link>
+
     )
+
   );
+
 }

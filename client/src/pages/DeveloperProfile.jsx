@@ -21,7 +21,8 @@ export default function DeveloperProfile() {
     "Meraas ⭐": "  ميراس⭐ ",
     "LEOS": "ليوس",
     "Reportage Prime Properties": "ريبورتاج برايم العقارية",
-    "EBDAA": "إبداع"
+    "EBDAA": "إبداع",
+    "Alaa Rebhi Admin": "المدير/ علاء ربحي"
   };
   const getTranslatedOwner = (name) => {
     const trimmed = name?.trim();
