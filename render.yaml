@@ -3,7 +3,7 @@ services:
 - type: web
   name: real-state
   runtime: node
-  repo: https://github.com/arrealstate/real-state
+  repo: https://github.com/Heba-Alii/real-state-main
   plan: standard
   region: oregon
   buildCommand: npm run clean && npm install && npm run build && ls -R
