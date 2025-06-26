@@ -67,9 +67,9 @@ const Footer = () => {
 
             <div className="flex flex-wrap mt-4 w-full justify-center">
               <div className="grid grid-cols-10 gap-4">
-                <a href="https://www.youtube.com/channel/UClIuZ3967zV4SsRveP4fvoQ"><FaYoutube /></a>
+                <a href="https://youtube.com/@ar-realestate-uae?si=XL7bgwawaFdtii9Q"><FaYoutube /></a>
                 <a href="https://www.linkedin.com/in/ar-realstate/"><FaLinkedin /></a>
-                <a href="https://www.instagram.com/arrealstate/"><FaInstagram /></a>
+                <a href="https://www.instagram.com/ar.real.estate_?igsh=NzVrczJ1NXg1emtl&utm_source=qr"><FaInstagram /></a>
                 <a href="https://api.whatsapp.com/send/?phone=971562929527"><FaWhatsapp /></a>
                 <a href="https://whatsapp.com/channel/0029VaQHfLH9sBI2tctAkf1i "><FaWhatsapp /></a>
                 <a href="https://www.pinterest.com/AR_RealState/"><FaPinterest /></a>
