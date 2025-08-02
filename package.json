@@ -37,7 +37,8 @@
     "react-pdf": "^9.2.1",
     "recharts": "^2.9.0",
     "socket.io": "^4.7.2",
-    "translate": "^3.0.1"
+    "translate": "^3.0.1",
+    "translate-google": "^1.5.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",

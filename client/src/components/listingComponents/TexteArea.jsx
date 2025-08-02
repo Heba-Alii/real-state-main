@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   FaMapMarkerAlt,
   FaBed,
@@ -10,6 +10,9 @@ import Contact from "../../components/Contact";
 import ListingDescription from "../listingComponents/ListingDescription ";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import translate from 'translate';
+
+
 function toArabicNumber(number) {
   const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
   return number.toString().replace(/\d/g, digit => arabicDigits[digit]);
@@ -17,6 +20,7 @@ function toArabicNumber(number) {
 const formatNumber = (num) => {
   return i18n.language === 'ar' ? toArabicNumber(num) : num;
 };
+const result = await translate("Investment Type", { to: 'ar' });
 
 const TexteArea = ({
   listing,
@@ -25,10 +29,35 @@ const TexteArea = ({
   sendWhatsappMessage,
   offerData,
 }) => {
+  const [translatedInvestmentDetails, setTranslatedInvestmentDetails] = useState('');
+
   const [isSendingMessage, setIsSendingMessage] = useState(false);
   const [language, setLanguage] = useState("EN");
   const { t, i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
+  //invesment
+  useEffect(() => {
+    const autoTranslateInvestmentDetails = async () => {
+      if (isArabic && listing?.InvestmentTypeDetails) {
+        try {
+          const translated = await translate(listing.InvestmentTypeDetails, {
+            from: 'en',
+            to: 'ar'
+          });
+          setTranslatedInvestmentDetails(translated);
+        } catch (error) {
+          console.error("Translation error for InvestmentTypeDetails:", error);
+          setTranslatedInvestmentDetails(listing.InvestmentTypeDetails); // fallback
+        }
+      } else {
+        setTranslatedInvestmentDetails(listing?.InvestmentTypeDetails || '');
+      }
+    };
+
+    autoTranslateInvestmentDetails();
+  }, [i18n.language, listing?.InvestmentTypeDetails, isArabic]);
+
+  /////////////////////////////////////////////////////////////////////
   const linkTo =
     listing.projectName === "Binghatti Phantom"
       ? "/PaymentPlanBINGHATTIPHANTOM"
@@ -348,8 +377,8 @@ const TexteArea = ({
             {t("available_on_request")}
           </p>
         )}
-        <p
-          className="text-slate-800">
+        <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="text-slate-800">
+
           <span
             dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="font-semibold text-black block mt-2 underline">
 
@@ -359,24 +388,13 @@ const TexteArea = ({
               : t('investmentType')}
             :
           </span>
-          {investmentTypeDetailsTranslations[listing.InvestmentTypeDetails?.toLowerCase()] ||
+          {/* {investmentTypeDetailsTranslations[listing.InvestmentTypeDetails?.toLowerCase()] ||
             listing.InvestmentTypeDetails ||
-            t('investmentTypeDetails')}
-        </p>
-        {/* <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="text-slate-800">
-          <span className="font-semibold text-black block mt-2 underline">
-            {listing.InvestmentType
-              ? i18n.language === "ar"
-                ? investmentTypeTranslations[listing.InvestmentType.trim().toLowerCase()] || listing.InvestmentType
-                : listing.InvestmentType.trim().charAt(0).toUpperCase() + listing.InvestmentType.trim().slice(1)
-              : t('investmentType')}
-            :
-          </span>
+            t('investmentTypeDetails')} */}
+          {translatedInvestmentDetails || t('investmentTypeDetails')}
 
-          {i18n.language === "ar"
-            ? translateInvestmentDetails(listing.InvestmentTypeDetails?.trim()) || t("investmentTypeDetails")
-            : listing.InvestmentTypeDetails?.trim() || t("investmentTypeDetails")}
-        </p> */}
+        </p>
+
 
         {listing.type === "rent" && (
           <p dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
@@ -402,140 +420,9 @@ const TexteArea = ({
 
         {/* <div>  */}
 
-        {/* 
+        {
 
-
-        
-{showMinMax ? (
-  <div className='gap-2 '> 
-    <p className='text-slate-800 pb-2'>
-      <span className='font-semibold text-black'>Internal Area : </span>
-      {listing.internalAreaMin} 
-      <span className='font-semibold text-black'> - </span>
-      {listing.internalAreaMax} sqft
-    </p>
-    <p className='text-slate-800 pb-2'>
-      <span className='font-semibold text-black'>External Area : </span>
-      {listing.externalAreaMin}
-      <span className='font-semibold text-black'> - </span>
-      {listing.externalAreaMax} sqft
-    </p>
-    <p className='text-slate-800 pb-2'>
-      <span className='font-semibold text-black'>Total Area: </span>
-      {listing.totalAreaMin} 
-      <span className='font-semibold text-black'> - </span>
-      {listing.totalAreaMax} sqft
-    </p>
-  </div>
-) : (
-  <div className='gap-2 '> 
-    <p className='text-slate-800 pb-2'>
-      <span className='font-semibold text-black'>Internal Area : </span>
-      {listing.internalAreaMin} sqft
-    </p>
-    <p className='text-slate-800 pb-2'>
-      <span className='font-semibold text-black'>External Area : </span>
-      {listing.externalAreaMin} sqft
-    </p>
-    <p className='text-slate-800 pb-2'>
-      <span className='font-semibold text-black'>Total Area: </span>
-      {listing.totalAreaMin}  sqft
-    </p>
-  </div>
-)}
-
-</div>
-{/* </div> * /}
-        <div className="gap-2 ">
-          {showMinMax ? (
-            <div className="gap-2 ">
-              {listing.internalAreaMin !== 0 && (
-                <p className="text-slate-800 pb-2">
-                  <span className="font-semibold text-black">
-                    Internal Area :{" "}
-                  </span>
-                  {listing.internalAreaMin}
-                  {listing.internalAreaMax !== 0 && (
-                    <>
-                      <span className="font-semibold text-black"> - </span>
-                      {listing.internalAreaMax}
-                    </>
-                  )}{" "}
-                  sqft
-                </p>
-              )}
-              {listing.externalAreaMin !== 0 && (
-                <p className="text-slate-800 pb-2">
-                  <span className="font-semibold text-black">
-                    External Area :{" "}
-                  </span>
-                  {listing.externalAreaMin}
-                  {listing.externalAreaMax !== 0 && (
-                    <>
-                      <span className="font-semibold text-black"> - </span>
-                      {listing.externalAreaMax}
-                    </>
-                  )}{" "}
-                  sqft
-                </p>
-              )}
-              {listing.internalAreaMin === 0 &&
-                listing.externalAreaMin === 0 &&
-                listing.totalAreaMin !== 0 && (
-                  <p className="text-slate-800 pb-2">
-                    <span className="font-semibold text-black">
-                      Total Area:{" "}
-                    </span>
-                    {listing.totalAreaMin !== 0 && listing.totalAreaMin}
-                    {listing.totalAreaMin !== 0 &&
-                      listing.totalAreaMax !== 0 && (
-                        <>
-                          <span className="font-semibold text-black"> - </span>
-                          {listing.totalAreaMax}
-                        </>
-                      )}{" "}
-                    sqft
-                  </p>
-                )}
-            </div>
-          ) : (
-            <div className="gap-2 ">
-              {listing.internalAreaMin !== 0 && (
-                <p className="text-slate-800 pb-2">
-                  <span className="font-semibold text-black">
-                    Internal Area :{" "}
-                  </span>
-                  {listing.internalAreaMin} sqft
-                </p>
-              )}
-              {listing.externalAreaMin !== 0 && (
-                <p className="text-slate-800 pb-2">
-                  <span className="font-semibold text-black">
-                    External Area :{" "}
-                  </span>
-                  {listing.externalAreaMin} sqft
-                </p>
-              )}
-              {listing.internalAreaMin === 0 &&
-                listing.externalAreaMin === 0 &&
-                listing.totalAreaMin !== 0 && (
-                  <p className="text-slate-800 pb-2">
-                    <span className="font-semibold text-black">
-                      Total Area:{" "}
-                    </span>
-                    {listing.totalAreaMin !== 0 && listing.totalAreaMin} sqft
-                  </p>
-                )}
-            </div>
-          )}
-
-          {listing.BUA !== 0 && (
-            <p className="text-slate-800">
-              <span className="font-semibold text-black">Built-Up Area : </span>
-              {listing.BUA} sqft
-            </p>
-          )}
-      </div> */}
+        }
 
 
 
