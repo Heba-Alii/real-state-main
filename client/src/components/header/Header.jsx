@@ -51,8 +51,8 @@ export default function Header() {
         {/* Logo and Offer Button */}
         <div className="flex items-center space-x-4" dir={isArabic ? 'rtl' : 'ltr'}>
           <Link to="/">
-            <h1 className="font-bold text-sm sm:text-xl text-white flex items-center">
-              <span
+            <h1 className="hidden sm:inline font-bold text-sm sm:text-xl text-white flex items-center">
+              <span 
                 className={`ARcolors-1000 ${isArabic ? 'ml-4' : 'mr-4'
                   }`}
               >
@@ -73,7 +73,7 @@ export default function Header() {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`text-black outline-none mr-4 bg-transparent w-full text-lg ${language === "AR" ? "text-right placeholder:text-right" : "text-left"
+            className={`hidden sm:inline text-black outline-none mr-4 bg-transparent w-full text-lg ${language === "AR" ? "text-right placeholder:text-right" : "text-left"
               }`}
             placeholder={t("Search_listings")}
           />
@@ -89,17 +89,17 @@ export default function Header() {
             }`}
         >
 
-          <li className="hidden sm:inline text-white font-bold hover:text-yellow-400 text-lg">
+          <li className="inline text-white font-bold hover:text-yellow-400 text-lg">
             <Link to="/">{t("home")}</Link>
           </li>
 
-          <li className="hidden sm:inline text-white font-bold hover:text-yellow-400 text-lg">
+          <li className="inline  text-white font-bold hover:text-yellow-400 text-lg">
             <Link to="/about">{t("about")}</Link>
           </li>
 
 
           {/* Language Switcher */}
-          <div className="relative hidden sm:inline-block">
+          <div className="relative inline-block">
             <button
               onClick={() => setShowLangMenu((prev) => !prev)}
               className="text-white font-bold hover:text-yellow-400 transition duration-200"
