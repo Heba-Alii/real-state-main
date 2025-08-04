@@ -153,8 +153,6 @@ const TexteArea = ({
     "office": "مكتب",
     "village": "قرية",
     "villa": "فيلا",
-    "bedroom": "غرفة نوم",
-    "studio": "استوديو",
     "apartment": "شقة",
     "townhouse": "تاون هاوس",
     "sobha": "شوبا",

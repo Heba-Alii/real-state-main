@@ -1,3 +1,27 @@
+// import { defineConfig } from "vite";
+// import react from "@vitejs/plugin-react-swc";
+
+// export default defineConfig({
+//   server: {
+//     proxy: {
+//       "/api": {
+//         target: "http://localhost:10000", // Your API server URL
+//         secure: false,
+//         changeOrigin: true, // Set this to true
+//       },
+//     },
+//   },
+//   plugins: [react()],
+//   optimizeDeps: {
+//     include: ["@react-pdf/renderer"],
+//   },
+//   build: {
+//     outDir: "dist",
+//   },
+//   rollupOptions: {
+//     input: "client/src/main.js",
+//   },
+// });
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
@@ -5,9 +29,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:10000", // Your API server URL
+        target: "http://localhost:10000",
         secure: false,
-        changeOrigin: true, // Set this to true
+        changeOrigin: true,
       },
     },
   },
@@ -16,9 +40,10 @@ export default defineConfig({
     include: ["@react-pdf/renderer"],
   },
   build: {
+    target: "esnext",
     outDir: "dist",
-  },
-  rollupOptions: {
-    input: "client/src/main.js",
+    rollupOptions: {
+      input: "src/main.jsx",
+    },
   },
 });

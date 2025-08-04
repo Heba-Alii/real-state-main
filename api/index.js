@@ -16,6 +16,7 @@ import path from "path";
 
 
 
+
 dotenv.config();
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(cookieParser());
+
 
 // MongoDB Connection
 const connectToDatabase = async () => {
