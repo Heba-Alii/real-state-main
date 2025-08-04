@@ -25,6 +25,10 @@ const port = process.env.PORT || 10000;
 
 const __dirname = path.resolve();
 
+import translateRoute from './routes/translate.route.js';
+app.use('/api/translate', translateRoute);
+
+
 // Middleware
 app.use(express.json());
 app.use(cors({

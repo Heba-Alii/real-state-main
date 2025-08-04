@@ -1,26 +1,32 @@
-// routes/translate.route.js
-import express from "express";
-import axios from "axios";
+import express from 'express';
+import fetch from 'node-fetch';
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-  const { q, source, target } = req.body;
-
+router.post('/', async (req, res) => {
   try {
-    const response = await axios.post('https://translate.astian.org/translate', {
-      q,
-      source,
-      target,
-      format: "text"
-    }, {
-      headers: { 'Content-Type': 'application/json' }
+    const { text, targetLang } = req.body;
+
+    if (!text || !targetLang) {
+      return res.status(400).json({ error: 'Missing text or targetLang' });
+    }
+
+    const response = await fetch('https://libretranslate.de/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        q: text,
+        source: 'auto',
+        target: targetLang,
+        format: 'text'
+      })
     });
 
-    res.json({ translatedText: response.data.translatedText });
+    const data = await response.json();
+    res.json({ translatedText: data.translatedText });
   } catch (error) {
-    console.error("Translation proxy error:", error.message);
-    res.status(500).json({ error: "Translation failed" });
+    console.error('Translation error:', error.message);
+    res.status(500).json({ error: 'Translation failed' });
   }
 });
 

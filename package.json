@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon api/index.js",
-
     "start": "node api/index.js",
     "deploy": "npm run frontend-build && firebase deploy",
     "backend-install": "npm install",
@@ -15,8 +14,7 @@
     "frontend-build": "npm run build --prefix client",
     "build": "npm run backend-install && npm run frontend-install && npm run frontend-build",
     "clean": "rm -rf node_modules client/node_modules dist && npm cache clean --force",
-            "preview": "vite preview"
-
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +33,7 @@
     "i18next-http-backend": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.8.6",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.0.1",
     "react-i18next": "^15.5.1",
     "react-icons": "^4.12.0",

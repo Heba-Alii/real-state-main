@@ -20,7 +20,14 @@ function toArabicNumber(number) {
 const formatNumber = (num) => {
   return i18n.language === 'ar' ? toArabicNumber(num) : num;
 };
-const result = await translate("Investment Type", { to: 'ar' });
+// const result = await translate("Investment Type", { to: 'ar' });
+const translateText = async () => {
+  const result = await translate("Investment Type", { to: 'ar' });
+  console.log(result);
+};
+
+translateText(); 
+
 
 const TexteArea = ({
   listing,
